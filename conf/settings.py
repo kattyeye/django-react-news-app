@@ -26,7 +26,10 @@ API_KEY = "9dd5db89a5c44f28920c6e7a73c639fc"
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [
+    '127.0.0.1:8000',
+    'django-react-news-app-kattyeye.herokuapp.com'
+]
 
 
 # Application definition
