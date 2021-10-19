@@ -11,9 +11,12 @@ export default function ArticleForm() {
 
   const [preview, setPreview] = useState("");
 
-  const handleChange = (event) => {
-    const { text, value } = event.target;
-    setArticle({ ...article, [text]: value });
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setArticle((prevState) => ({
+      ...prevState,
+      [name]: value,
+    }));
   };
 
   const handleImage = (event) => {
@@ -22,12 +25,17 @@ export default function ArticleForm() {
 
     const reader = new FileReader();
     reader.onloadend = () => {
-      setArticle(reader.result);
+      // setArticle(reader.result);
+      setPreview(reader.result);
     };
     reader.readAsDataURL(file);
   };
 
-  const handleSubmit = (event) => {
+  const handleError = (err) => {
+    console.warn(err);
+  };
+
+  async function handleSubmit(event) {
     event.preventDefault();
     const formData = new FormData();
     formData.append("title", article.title);
@@ -38,12 +46,21 @@ export default function ArticleForm() {
     const options = {
       method: "POST",
       headers: {
+        "Content-Type": "application/json",
         "X-CSRFToken": Cookies.get("csrftoken"),
       },
-      body: formData,
+      body: JSON.stringify(formData),
     };
-    fetch("/api_v1/articles/", options);
-  };
+    const response = await fetch("/api_v1/articles/", options).catch(
+      handleError
+    );
+    if (!response) {
+      console.log(response);
+    } else {
+      const data = await response.json();
+      Cookies.set("Authorization", `Token${data.key}`);
+    }
+  }
 
   return (
     <div>
@@ -68,6 +85,10 @@ export default function ArticleForm() {
         />
 
         <input onChange={handleImage} type="file" />
+        {article.image && <img src={preview} alt="" />}
+        <button type="submit" className="btn btn-primary mt-3">
+          Submit News
+        </button>
       </form>
     </div>
   );

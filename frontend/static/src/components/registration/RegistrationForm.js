@@ -29,7 +29,6 @@ export default function RegistrationForm() {
     const { name, value } = e.target;
     setUser((prevState) => ({
       ...prevState,
-
       [name]: value,
     }));
   };

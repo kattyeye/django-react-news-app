@@ -1,4 +1,5 @@
 import { useState } from "react";
+import Cookies from "js-cookie";
 
 export default function CustomUser() {
   const [profile, setProfile] = useState({
@@ -23,7 +24,7 @@ export default function CustomUser() {
     reader.readAsDataURL(file);
   };
 
-  const handleSubmit = (event) => {
+  async function handleSubmit(event) {
     event.preventDefault();
     const formData = new FormData();
     formData.append("alias", profile.alias);
@@ -32,12 +33,19 @@ export default function CustomUser() {
     const options = {
       method: "POST",
       headers: {
-        // "X-CSRFToken": Cookies.get("csrftoken"),
+        "Content-Type": "application/json",
+        "X-CSRFToken": Cookies.get("csrftoken"),
       },
-      body: formData,
+      body: JSON.stringify(formData),
     };
-    // fetch(url, options);
-  };
+    const response = await fetch("/rest-auth/user/", options);
+    if (!response) {
+      console.log(response);
+    } else {
+      const data = await response.json();
+      Cookies.set("Authorization", `Token${data.key}`);
+    }
+  }
   return (
     <div className="App">
       <form onSubmit={handleSubmit}>
