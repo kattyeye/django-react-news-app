@@ -1,11 +1,5 @@
 import { useState, useEffect } from "react";
 export default function ArticleList() {
-  const [article, setArticle] = useState({
-    title: "",
-    author: "",
-    body: "",
-    image: null,
-  });
   const [articleList, setArticleList] = useState([]);
 
   useEffect(() => {
@@ -19,15 +13,28 @@ export default function ArticleList() {
   }, []);
 
   return (
-    <div>
-      {articleList.map((article) => (
-        <article key={article.id} className="articleholder">
-          <h2>{article.title}</h2>
-          <span>{article.author}</span>
-          <img>{article.image}</img>
-          <p>{article.body}</p>
-        </article>
-      ))}
+    <div className="article-container">
+      <div className="articleholder">
+        {articleList.map((article) => (
+          <article key={article.id}>
+            <h2>{article.title}</h2>
+            <span>{article.author}</span>
+            <img>{article.image}</img>
+            <p>{article.body}</p>
+          </article>
+        ))}
+      </div>
+
+      <div className="articleholderaside">
+        {articleList.map((article) => (
+          <article key={article.id}>
+            <h2>{article.title}</h2>
+            <span>{article.author}</span>
+            <img>{article.image}</img>
+            <p>{article.body}</p>
+          </article>
+        ))}
+      </div>
     </div>
   );
 }
