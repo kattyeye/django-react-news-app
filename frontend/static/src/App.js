@@ -1,6 +1,7 @@
 import logo from "./logo.svg";
 import "./App.css";
 import CustomUser from "./custom-user/CustomUser";
+import ArticleList from "./articles/ArticleList";
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
         </ul>
       </nav>
       <CustomUser />
+      <ArticleList />
     </div>
   );
 }
