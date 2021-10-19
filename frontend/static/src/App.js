@@ -1,8 +1,8 @@
-import logo from "./logo.svg";
 import "./App.css";
 import CustomUser from "./custom-user/CustomUser";
 import ArticleList from "./articles/ArticleList";
 import ArticleForm from "./articles/ArticleForm";
+import RegistrationForm from "./registration/RegistrationForm";
 function App() {
   return (
     <div className="articleapp">
@@ -26,6 +26,7 @@ function App() {
       <ArticleForm />
       <ArticleList />
       <ArticleList />
+      <RegistrationForm />
     </div>
   );
 }

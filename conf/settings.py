@@ -41,10 +41,15 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'whitenoise.runserver_nostatic',
     'django.contrib.staticfiles',
+    'django.contrib.sites',  # new
 
     # 3rd party
     'rest_framework',
-
+    'rest_framework.authtoken',
+    'rest_auth',
+    'allauth',  # new
+    'allauth.account',  # new
+    'rest_auth.registration',
     # local
     'accounts.apps.AccountsConfig',
     'articles.apps.ArticlesConfig',
