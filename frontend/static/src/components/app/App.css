@@ -32,6 +32,11 @@ nav button {
 nav button:hover {
   border-bottom: 2px solid purple;
 }
+.logbutton {
+  border: 2px solid purple;
+  padding: 10px;
+}
+
 .article-container {
   display: flex;
 }

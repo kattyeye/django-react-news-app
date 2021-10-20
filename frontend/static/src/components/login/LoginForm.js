@@ -1,6 +1,7 @@
 import { useState } from "react";
+import { withRouter, Redirect } from "react-router-dom";
 import Cookies from "js-cookie";
-export default function LoginForm(props) {
+function LoginForm(props) {
   const [user, setUser] = useState({
     username: "",
     password: "",
@@ -39,11 +40,13 @@ export default function LoginForm(props) {
     } else {
       const data = await response.json();
       Cookies.set("Authorization", `Token${data.key}`);
-      props.setState({
-        isAuth: true,
-        selection: "profile",
-      });
+      props.setIsAuth(true);
+      props.history.push("/account");
     }
+  }
+
+  if (props.isAuth) {
+    return <Redirect to="/account" />;
   }
 
   return (
@@ -88,3 +91,4 @@ export default function LoginForm(props) {
     </form>
   );
 }
+export default withRouter(LoginForm);

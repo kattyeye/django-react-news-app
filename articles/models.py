@@ -5,6 +5,7 @@ from django.db import models
 
 class Article(models.Model):
     title = models.CharField(max_length=255)
+    # need to delete and makemigrations/migrate before changing to foreignkey
     author = models.CharField(max_length=255)
     body = models.TextField()
     image = models.ImageField(upload_to='article_images', null=True,)

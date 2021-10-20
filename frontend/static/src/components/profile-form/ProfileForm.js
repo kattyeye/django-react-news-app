@@ -1,7 +1,7 @@
 import { useState } from "react";
 import Cookies from "js-cookie";
 
-export default function CustomUser() {
+export default function ProfileForm() {
   const [profile, setProfile] = useState({
     alias: "",
     avatar: null,
@@ -36,14 +36,14 @@ export default function CustomUser() {
         "Content-Type": "application/json",
         "X-CSRFToken": Cookies.get("csrftoken"),
       },
-      body: JSON.stringify(formData),
+      body: JSON.stringify({ formData }),
     };
-    const response = await fetch("/rest-auth/user/", options);
+    const response = await fetch("/api_v1/account/", options);
     if (!response) {
       console.log(response);
     } else {
       const data = await response.json();
-      Cookies.set("Authorization", `Token${data.key}`);
+      Cookies.set("Profile", `Token${data.key}`);
     }
   }
   return (
