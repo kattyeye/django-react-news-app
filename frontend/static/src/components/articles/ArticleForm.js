@@ -39,17 +39,15 @@ export default function ArticleForm() {
     event.preventDefault();
     const formData = new FormData();
     formData.append("title", article.title);
-    formData.append("author", article.author);
     formData.append("body", article.body);
     formData.append("image", article.image); // constructing key value pairs
 
     const options = {
       method: "POST",
       headers: {
-        "Content-Type": "application/json",
         "X-CSRFToken": Cookies.get("csrftoken"),
       },
-      body: JSON.stringify(formData),
+      body: formData,
     };
     const response = await fetch("/api_v1/articles/", options).catch(
       handleError
@@ -58,7 +56,7 @@ export default function ArticleForm() {
       console.log(response);
     } else {
       const data = await response.json();
-      Cookies.set("Authorization", `Token${data.key}`);
+      // setArticle(data);
     }
   }
 
@@ -71,16 +69,16 @@ export default function ArticleForm() {
           name="title"
           type="text"
         />
-        <input
+        {/* <input
           onChange={handleChange}
           value={article.author}
           name="author"
           type="text"
-        />
+        /> */}
         <input
           onChange={handleChange}
           value={article.body}
-          name="bodytext"
+          name="body"
           type="text"
         />
 

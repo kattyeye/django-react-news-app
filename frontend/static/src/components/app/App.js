@@ -67,6 +67,10 @@ function App() {
         </Route>
         <Route path="/account">
           <ProfileForm isAuth={isAuth} />
+          <ArticleForm />
+        </Route>
+        <Route path="/">
+          <ArticleList />
         </Route>
       </Switch>
     </>
