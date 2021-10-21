@@ -1,7 +1,7 @@
 import { useState } from "react";
 import Cookies from "js-cookie";
 
-export default function ArticleForm() {
+export default function ArticleForm(props) {
   const [article, setArticle] = useState({
     title: "",
     author: "",
@@ -49,23 +49,25 @@ export default function ArticleForm() {
       },
       body: formData,
     };
-    const response = await fetch("/api_v1/articles/", options).catch(
+    const response = await fetch("/api_v1/articles/drafts/", options).catch(
       handleError
     );
     if (!response) {
       console.log(response);
     } else {
       const data = await response.json();
-      // setArticle(data);
+      setArticle(data);
     }
+    props.history.push("/drafts");
   }
 
   return (
     <div className="container">
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit} className="mt-5 col-8">
         <input
           onChange={handleChange}
           value={article.title}
+          className="form-control"
           name="title"
           type="text"
           placeholder="Title here."
@@ -76,18 +78,19 @@ export default function ArticleForm() {
           name="author"
           type="text"
         /> */}
-        <input
+        <textarea
           onChange={handleChange}
           value={article.body}
+          className="form-control"
           name="body"
           type="text"
           placeholder="Body text here."
         />
 
-        <input onChange={handleImage} type="file" />
+        <input onChange={handleImage} type="file" className="form-control" />
         {article.image && <img src={preview} alt="" />}
-        <button type="submit" className="btn btn-primary mt-3">
-          Submit News
+        <button type="submit" className="btn btn-warning mt-3">
+          Save as Draft
         </button>
       </form>
     </div>

@@ -5,7 +5,7 @@ function ProfilePage(props) {
     <div className="container">
       <div></div>
       <div>
-        <h3>{}</h3>
+        <h3>{props.profile}</h3>
       </div>
     </div>
   );

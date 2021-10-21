@@ -70,7 +70,7 @@ export default function ProfileForm(props) {
           className="form-control"
         />
         {profile.avatar && <img src={preview} alt="" />}
-        <button className="btn btn-success" type="submit">
+        <button className="btn btn-success" type="submit" onClick={setProfile}>
           Save Profile
         </button>
       </form>

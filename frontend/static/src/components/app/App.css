@@ -10,12 +10,20 @@ img {
 }
 
 .navbar img {
-  width: 12%;
+  width: 15%;
+}
+.content {
+  margin-top: 65px;
 }
 
-.articleholder img {
-  width: 60%;
-}
-.nav-item {
+.nav-item a {
   color: black;
+  text-decoration: none;
+  font-family: "roboto";
+  font-weight: bolder;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+.nav-item a:hover {
+  color: royalblue;
 }

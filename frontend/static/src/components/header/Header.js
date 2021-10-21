@@ -5,7 +5,7 @@ export default function Header() {
     <nav className="navbar navbar-expand-lg ">
       <div className="container">
         <NavLink className="navbar-brand" to="/">
-          <img src="media/1.png" />
+          <img src="media/3.png" />
         </NavLink>
         <button
           className="navbar-toggler"
@@ -28,6 +28,9 @@ export default function Header() {
             </li>
             <li className="nav-item p-3">
               <NavLink to="/login">Login</NavLink>
+            </li>
+            <li className="nav-item p-3">
+              <NavLink to="/drafts">My Drafts</NavLink>
             </li>
           </ul>
         </div>

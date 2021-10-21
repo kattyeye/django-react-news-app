@@ -10,8 +10,46 @@ class Article(models.Model):
     body = models.TextField()
     image = models.ImageField(
         upload_to='article_images', null=True, blank=True)
-    # class Meta:
-    #     ordering = ('-created_at',)
+
+    DRAFT = 'DRA'
+    SUBMITTED = 'SUB'
+    PUBLISHED = "PUB"
+    REJECTED = 'REJ'
+    ARCHIVED = 'ARC'
+    PHASE_OPTIONS = [
+        (DRAFT, "Draft"),
+        (SUBMITTED, "Submitted"),
+        (PUBLISHED, "Published"),
+        (REJECTED, "Rejected"),
+        (ARCHIVED, "Archived"),
+    ]
+    phase = models.CharField(
+        default='DRA',
+        choices=PHASE_OPTIONS,
+        max_length=3
+    )
+
+    HOME = 'HOM'
+    FOOD = 'FOO'
+    FASHION = "FAS"
+    LOCAL = 'LOC'
+    GLOBAL = 'GLO'
+    CATEGORY_OPTIONS = [
+        (HOME, "Home"),
+        (FOOD, "Food"),
+        (FASHION, "Fashion"),
+        (LOCAL, "Local"),
+        (GLOBAL, "Global"),
+    ]
+    category = models.CharField(
+        default='HOM',
+        choices=CATEGORY_OPTIONS,
+        max_length=3
+    )
+
+    # is_published = models.BooleanField(default=False)
+    # is_rejected = models.BooleanField(default=False)
+    # is_archived = models.BooleanField(default=False)
 
     def __str__(self):
         return self.title

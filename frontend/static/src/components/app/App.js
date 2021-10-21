@@ -1,14 +1,15 @@
 import "./App.css";
 import { Route, Switch, withRouter, useHistory } from "react-router-dom";
 import ProfileForm from "../profile-form/ProfileForm";
-import ArticleList from "../articles/ArticleList";
+import ArticleListHome from "../articles/ArticleListHome";
 import ArticleForm from "../articles/ArticleForm";
 import RegistrationForm from "../registration/RegistrationForm";
 import { useState, useEffect } from "react";
 import LoginForm from "../login/LoginForm";
 import Header from "../header/Header";
 import ProfilePage from "../profile-form/ProfilePage";
-
+import Admin from "../articles/Admin";
+import ArticleListDrafts from "../articles/ArticleListDrafts";
 function App() {
   const [isAuth, setIsAuth] = useState(null);
   const history = useHistory();
@@ -17,10 +18,10 @@ function App() {
       const response = await fetch("/rest-auth/user");
       if (!response.ok) {
         setIsAuth(false);
-        history.push("/login");
+        // history.push("/login");
       } else {
         setIsAuth(true);
-        history.push("/account");
+        // history.push("/account");
       }
     };
     checkAuth();
@@ -38,26 +39,6 @@ function App() {
   // }
   return (
     <>
-      {" "}
-      {/* <nav>
-        <ul>
-          <li>
-            <button type="button">Current News</button>
-          </li>
-          <li>
-            <button type="button">Some News</button>
-          </li>
-          <li>
-            <button type="button">Global News</button>
-          </li>
-          <button className="logbutton" type="button">
-            Logout
-          </button>
-        </ul>
-      </nav>
-      <header className="titleofpage">
-        <h2>The Debra Chronicles</h2>
-      </header> */}
       <Header />
       <Switch>
         <Route path="/registration">
@@ -67,12 +48,16 @@ function App() {
           <LoginForm isAuth={isAuth} setIsAuth={setIsAuth} />
         </Route>
         <Route path="/account">
-          <ProfileForm />
-          <ArticleForm />
+          {/* <ProfileForm /> */}
+          <ArticleForm history={history} />
           <ProfilePage isAuth={isAuth} />
+          <Admin isAuth={isAuth} />
+        </Route>
+        <Route path="/drafts">
+          <ArticleListDrafts isAuth={isAuth} history={history} />
         </Route>
         <Route path="/">
-          <ArticleList isAuth={isAuth} />
+          <ArticleListHome />
         </Route>
       </Switch>
     </>
