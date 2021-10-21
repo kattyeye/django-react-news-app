@@ -41,6 +41,7 @@ export default function ArticleForm(props) {
     formData.append("title", article.title);
     formData.append("body", article.body);
     formData.append("image", article.image); // constructing key value pairs
+    formData.append("phase", event.target.value);
 
     const options = {
       method: "POST",
@@ -49,7 +50,7 @@ export default function ArticleForm(props) {
       },
       body: formData,
     };
-    const response = await fetch("/api_v1/articles/drafts/", options).catch(
+    const response = await fetch("/api_v1/articles/", options).catch(
       handleError
     );
     if (!response) {
@@ -63,7 +64,8 @@ export default function ArticleForm(props) {
 
   return (
     <div className="container">
-      <form onSubmit={handleSubmit} className="mt-5 col-8">
+      <form className="mt-5 col-8">
+        <label>Submit an Article</label>
         <input
           onChange={handleChange}
           value={article.title}
@@ -89,8 +91,23 @@ export default function ArticleForm(props) {
 
         <input onChange={handleImage} type="file" className="form-control" />
         {article.image && <img src={preview} alt="" />}
-        <button type="submit" className="btn btn-warning mt-3">
+        <button
+          type="button"
+          className="btn btn-warning mt-3"
+          name="DRA"
+          value="DRA"
+          onClick={handleSubmit}
+        >
           Save as Draft
+        </button>
+        <button
+          type="button"
+          className="btn btn-success mt-3"
+          name="DRA"
+          value="SUB"
+          onClick={handleSubmit}
+        >
+          Submit for Publishing
         </button>
       </form>
     </div>

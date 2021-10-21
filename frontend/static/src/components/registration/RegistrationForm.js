@@ -1,101 +1,108 @@
 import { useState } from "react";
 import Cookies from "js-cookie";
-export default function RegistrationForm() {
-  const [error, setError] = useState(null);
+
+export default function RegistrationForm(props) {
   const [user, setUser] = useState({
     username: "",
+    email: "",
     password1: "",
     password2: "",
   });
-  const handleRegistration = async (user) => {
-    const options = {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        "X-CSRFToken": Cookies.get("csrftoken"),
-      },
-      body: JSON.stringify(user),
-    };
 
-    const response = await fetch("/rest-auth/registration/", options);
-    if (!response === true) {
-      console.warn(response);
-    } else {
-      const data = await response.json();
-      Cookies.set("Authorization", `Token ${data.key}`);
-    }
-  };
-  const handleChange = (e) => {
-    const { name, value } = e.target;
+  const [error, setError] = useState(null);
+
+  function handleInput(event) {
+    const { name, value } = event.target;
     setUser((prevState) => ({
       ...prevState,
       [name]: value,
     }));
-  };
+  }
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
+  function handleError(err) {
+    console.warn(err);
+  }
+
+  //   const handleSubmit = (event) => {};
+  async function handleSubmit(event) {
+    event.preventDefault();
     if (user.password1 !== user.password2) {
       setError("Passwords do not match!");
     } else {
-      handleRegistration(user);
-    }
-  };
+      const options = {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "X-CSRFToken": Cookies.get("csrftoken"),
+        },
+        body: JSON.stringify(user),
+      };
 
+      const response = await fetch("/rest-auth/registration/", options).catch(
+        handleError
+      );
+      if (!response) {
+        console.log(response);
+      } else {
+        const data = await response.json();
+        Cookies.set("Authorization", `Token${data.key}`);
+      }
+    }
+  }
   return (
-    <form className="mt-3" onSubmit={handleSubmit}>
+    <form className="mt-3 col-6 container" onSubmit={handleSubmit}>
       <div className="form-group text-left mb-3">
-        <label htmlFor="username">Username</label>
+        <label htmlFor="username">username</label>
         <input
           type="text"
           className="form-control"
           id="username"
-          placeholder="Enter username."
+          placeholder="enter username."
+          onChange={handleInput}
           required
           name="username"
-          onChange={handleChange}
           value={user.username}
         />
       </div>
-      {/* <div className="form-group text-left mb-3">
-        <label htmlFor="email">Email</label>
+      <div className="form-group text-left mb-3">
+        <label htmlFor="email">email</label>
         <input
-          type="email"
+          type="text"
           className="form-control"
           id="email"
-          placeholder="Enter email."
+          placeholder="enter email."
+          onChange={handleInput}
           required
           name="email"
-          onChange={handleChange}
           value={user.email}
         />
-      </div> */}
+      </div>
       <div className="form-group text-left mb-3">
-        <label htmlFor="password1">Password</label>
+        <label htmlFor="password1">password</label>
         <input
           type="password"
           className="form-control"
           id="password1"
-          placeholder="Enter password."
+          placeholder="enter password."
+          onChange={handleInput}
           required
           name="password1"
-          onChange={handleChange}
           value={user.password1}
         />
       </div>
       <div className="form-group text-left mb-3">
-        <label htmlFor="password2">Confirm your password</label>
+        <label htmlFor="password2">confirm password</label>
         <input
           type="password"
           className="form-control"
           id="password2"
-          placeholder="Re-enter your password."
+          placeholder="confirm password."
+          onChange={handleInput}
           required
           name="password2"
-          onChange={handleChange}
           value={user.password2}
         />
-        <span className="text-danger">{error}</span>
+        {error && <span className="text-danger">{error}</span>}
       </div>
       <button type="submit" className="btn btn-primary mt-3">
         Register

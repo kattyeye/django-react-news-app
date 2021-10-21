@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
+import { withRouter } from "react-router";
 
-export default function ArticleListHome(props) {
+function ArticleList(props) {
   const [articleList, setArticleList] = useState([]);
 
   useEffect(() => {
@@ -47,3 +48,4 @@ export default function ArticleListHome(props) {
     </div>
   );
 }
+export default withRouter(ArticleList);

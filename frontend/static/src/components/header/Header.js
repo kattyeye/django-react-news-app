@@ -30,7 +30,7 @@ export default function Header() {
               <NavLink to="/login">Login</NavLink>
             </li>
             <li className="nav-item p-3">
-              <NavLink to="/drafts">My Drafts</NavLink>
+              <NavLink to="/articles/drafts">My Drafts</NavLink>
             </li>
           </ul>
         </div>

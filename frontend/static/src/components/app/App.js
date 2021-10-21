@@ -1,7 +1,7 @@
 import "./App.css";
 import { Route, Switch, withRouter, useHistory } from "react-router-dom";
 import ProfileForm from "../profile-form/ProfileForm";
-import ArticleListHome from "../articles/ArticleListHome";
+import ArticleList from "../articles/ArticleList";
 import ArticleForm from "../articles/ArticleForm";
 import RegistrationForm from "../registration/RegistrationForm";
 import { useState, useEffect } from "react";
@@ -9,7 +9,7 @@ import LoginForm from "../login/LoginForm";
 import Header from "../header/Header";
 import ProfilePage from "../profile-form/ProfilePage";
 import Admin from "../articles/Admin";
-import ArticleListDrafts from "../articles/ArticleListDrafts";
+import ArticleListAuth from "../articles/ArticleListAuth";
 function App() {
   const [isAuth, setIsAuth] = useState(null);
   const history = useHistory();
@@ -53,11 +53,11 @@ function App() {
           <ProfilePage isAuth={isAuth} />
           <Admin isAuth={isAuth} />
         </Route>
-        <Route path="/drafts">
-          <ArticleListDrafts isAuth={isAuth} history={history} />
+        <Route path="/articles/:phase?">
+          <ArticleListAuth isAuth={isAuth} history={history} />
         </Route>
         <Route path="/">
-          <ArticleListHome />
+          <ArticleList />
         </Route>
       </Switch>
     </>
