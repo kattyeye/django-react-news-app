@@ -61,13 +61,14 @@ export default function ArticleForm() {
   }
 
   return (
-    <div>
+    <div className="container">
       <form onSubmit={handleSubmit}>
         <input
           onChange={handleChange}
           value={article.title}
           name="title"
           type="text"
+          placeholder="Title here."
         />
         {/* <input
           onChange={handleChange}
@@ -80,6 +81,7 @@ export default function ArticleForm() {
           value={article.body}
           name="body"
           type="text"
+          placeholder="Body text here."
         />
 
         <input onChange={handleImage} type="file" />

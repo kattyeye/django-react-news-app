@@ -7,6 +7,7 @@ import RegistrationForm from "../registration/RegistrationForm";
 import { useState, useEffect } from "react";
 import LoginForm from "../login/LoginForm";
 import Header from "../header/Header";
+import ProfilePage from "../profile-form/ProfilePage";
 
 function App() {
   const [isAuth, setIsAuth] = useState(null);
@@ -66,11 +67,12 @@ function App() {
           <LoginForm isAuth={isAuth} setIsAuth={setIsAuth} />
         </Route>
         <Route path="/account">
-          <ProfileForm isAuth={isAuth} />
+          <ProfileForm />
           <ArticleForm />
+          <ProfilePage isAuth={isAuth} />
         </Route>
         <Route path="/">
-          <ArticleList />
+          <ArticleList isAuth={isAuth} />
         </Route>
       </Switch>
     </>

@@ -54,7 +54,7 @@ export default function ProfileForm(props) {
   // }
 
   return (
-    <div className="form-group text-left mb-3">
+    <div className="container form-group text-left mb-3">
       <form onSubmit={handleSubmit} className="mt-3 col-6">
         <input
           type="text"

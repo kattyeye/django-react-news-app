@@ -2,11 +2,11 @@ import { NavLink } from "react-router-dom";
 
 export default function Header() {
   return (
-    <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
+    <nav className="navbar navbar-expand-lg ">
       <div className="container">
-        <a className="navbar-brand" href="/">
-          News App
-        </a>
+        <NavLink className="navbar-brand" to="/">
+          <img src="media/1.png" />
+        </NavLink>
         <button
           className="navbar-toggler"
           type="button"

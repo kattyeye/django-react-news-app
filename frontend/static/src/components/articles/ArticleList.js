@@ -14,13 +14,13 @@ export default function ArticleList(props) {
   }, []);
 
   return (
-    <div className="article-container">
+    <div className="container mt-5">
       <div className="articleholder">
         {articleList.map((article) => (
           <article key={article.id}>
             <h2>{article.title}</h2>
-            <span>{article.author}</span>
-            {/* <img>{article.image}</img> */}
+            <p style={{ fontStyle: "italic" }}>{article.author}</p>
+            <img src={article.image} alt="article-related-image" />
             <p>{article.body}</p>
           </article>
         ))}

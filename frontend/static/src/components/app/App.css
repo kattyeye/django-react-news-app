@@ -5,60 +5,17 @@
 li {
   list-style: none;
 }
-
-.articleapp {
-  margin: 0px 50px 0px 50px;
-}
-nav {
-  height: 65px;
-  margin-bottom: 20px;
-  padding: 10px 0px 10px 0px;
-}
-nav ul {
-  display: flex;
-  justify-content: space-around;
+img {
+  width: 100%;
 }
 
-nav button {
+.navbar img {
+  width: 12%;
+}
+
+.articleholder img {
+  width: 60%;
+}
+.nav-item {
   color: black;
-  background: none;
-  border: none;
-  border-bottom: 2px solid green;
-  text-transform: uppercase;
-  font-weight: 700;
-  font-size: 12px;
-  cursor: pointer;
-}
-nav button:hover {
-  border-bottom: 2px solid purple;
-}
-.logbutton {
-  border: 2px solid purple;
-  padding: 10px;
-}
-
-.article-container {
-  display: flex;
-}
-
-.titleofpage {
-  text-align: center;
-  font-size: 30px;
-}
-
-.articleholder {
-  width: 65%;
-  display: flex;
-  flex-direction: column;
-  margin-top: 50px;
-  margin-bottom: 50px;
-  padding: 20px;
-}
-.articleholderaside {
-  width: 35%;
-  display: flex;
-  flex-direction: flex-end;
-  margin-top: 50px;
-  margin-bottom: 50px;
-  padding: 20px;
 }
