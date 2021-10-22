@@ -1,12 +1,26 @@
 import { useState, useEffect } from "react";
 import { withRouter } from "react-router";
 
+const phases = {
+  drafts: "DRA",
+  submitted: "SUB",
+  published: "PUB",
+  rejected: "REJ",
+};
+
 function ArticleList(props) {
   const [articleList, setArticleList] = useState([]);
 
   useEffect(() => {
+    const key = props.match.params.phase;
+    // alert(key);
+    let url = `/api_v1/articles/`;
+    if (key) {
+      url = `/api_v1/articles/?phase=${phases[key]}`;
+      // alert(url);
+    }
     async function fetchArticles() {
-      const response = await fetch(`/api_v1/articles/`);
+      const response = await fetch(url);
       const data = await response.json();
       console.log("articles", data);
       setArticleList(data);

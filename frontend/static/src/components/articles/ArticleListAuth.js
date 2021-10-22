@@ -67,7 +67,7 @@ function ArticleListAuth(props) {
                 <p style={{ fontStyle: "italic" }}>by {article.author}</p>
                 <p className="info">{article.body}</p>
 
-                <button
+                {/* <button
                   type="button"
                   className="btn btn-success mt-3"
                   name="DRA"
@@ -75,7 +75,7 @@ function ArticleListAuth(props) {
                   onClick={submitToAdmin}
                 >
                   Submit for Publishing
-                </button>
+                </button> */}
               </section>
             </div>
           ))}

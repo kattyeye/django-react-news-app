@@ -6,10 +6,11 @@ import ArticleForm from "../articles/ArticleForm";
 import RegistrationForm from "../registration/RegistrationForm";
 import { useState, useEffect } from "react";
 import LoginForm from "../login/LoginForm";
-import Header from "../header/Header";
+import SecondaryHeader from "../header/SecondaryHeader";
 import ProfilePage from "../profile-form/ProfilePage";
 import Admin from "../articles/Admin";
 import ArticleListAuth from "../articles/ArticleListAuth";
+import PrimaryHeader from "../header/PrimaryHeader";
 function App() {
   const [isAuth, setIsAuth] = useState(null);
   const history = useHistory();
@@ -39,7 +40,8 @@ function App() {
   // }
   return (
     <>
-      <Header />
+      <SecondaryHeader />
+      <PrimaryHeader />
       <Switch>
         <Route path="/registration">
           <RegistrationForm />
@@ -56,7 +58,7 @@ function App() {
         <Route path="/articles/:phase?">
           <ArticleListAuth isAuth={isAuth} history={history} />
         </Route>
-        <Route path="/">
+        <Route path="/articles/:phase?">
           <ArticleList />
         </Route>
       </Switch>

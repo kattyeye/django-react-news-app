@@ -1,30 +1,21 @@
 import { NavLink } from "react-router-dom";
 
-export default function Header() {
+export default function SecondaryHeader() {
   return (
     <nav className="navbar navbar-expand-lg ">
       <div className="container">
-        <NavLink className="navbar-brand" to="/">
-          <img src="media/3.png" />
-        </NavLink>
-        <button
-          className="navbar-toggler"
-          type="button"
-          data-toggle="collapse"
-          data-target="#navbarResponsive"
-          aria-controls="navbarResponsive"
-          aria-expanded="false"
-          aria-label="Toggle navigation"
-        >
-          <span className="navbar-toggler-icon"></span>
-        </button>
         <div className="collapse navbar-collapse" id="navbarResponsive">
           <ul className="navbar-nav ml-auto">
             <li className="nav-item p-3">
-              <NavLink to="/">Home</NavLink>
+              <NavLink to="/articles/published">Home</NavLink>
             </li>
             <li className="nav-item p-3">
               <NavLink to="/account">My Account</NavLink>
+            </li>
+            <li>
+              <NavLink className="navbar-brand" to="/articles/published">
+                <img src="media/3.png" />
+              </NavLink>
             </li>
             <li className="nav-item p-3">
               <NavLink to="/login">Login</NavLink>

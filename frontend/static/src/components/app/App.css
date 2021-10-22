@@ -10,7 +10,21 @@ img {
 }
 
 .navbar img {
-  width: 15%;
+  width: 25%;
+}
+#navbarResponsive {
+  display: flex;
+  justify-content: center;
+}
+#navbarResponsive li {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.navbar-brand {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 .content {
   margin-top: 65px;
