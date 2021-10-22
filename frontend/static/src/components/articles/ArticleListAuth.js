@@ -64,7 +64,9 @@ function ArticleListAuth(props) {
                 />
               </section>
               <section className="text">
-                <p style={{ fontStyle: "italic" }}>by {article.author}</p>
+                <p style={{ fontStyle: "italic" }}>
+                  by {article.author} <br></br> phase: {article.phase}
+                </p>
                 <p className="info">{article.body}</p>
 
                 {/* <button

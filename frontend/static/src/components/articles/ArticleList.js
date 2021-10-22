@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { withRouter } from "react-router";
+import { withRouter } from "react-router-dom";
 
 const phases = {
   drafts: "DRA",
@@ -8,15 +8,24 @@ const phases = {
   rejected: "REJ",
 };
 
+const categories = {
+  home: "HOM",
+  food: "FOO",
+  fashion: "FAS",
+  local: "LOC",
+  global: "GLO",
+};
 function ArticleList(props) {
   const [articleList, setArticleList] = useState([]);
 
   useEffect(() => {
+    const catKey = props.match.params.category;
     const key = props.match.params.phase;
-    // alert(key);
+    // alert(cat);
+
     let url = `/api_v1/articles/`;
     if (key) {
-      url = `/api_v1/articles/?phase=${phases[key]}`;
+      url = `/api_v1/articles/?phase=${phases[key]}/?category=${categories[catKey]}`;
       // alert(url);
     }
     async function fetchArticles() {

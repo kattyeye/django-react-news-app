@@ -55,10 +55,10 @@ function App() {
           <ProfilePage isAuth={isAuth} />
           <Admin isAuth={isAuth} />
         </Route>
-        <Route path="/articles/:phase?">
+        <Route path="/articles/:phase?/:category?">
           <ArticleListAuth isAuth={isAuth} history={history} />
         </Route>
-        <Route path="/articles/:phase?">
+        <Route path="/articles/:phase?/:category?">
           <ArticleList />
         </Route>
       </Switch>
