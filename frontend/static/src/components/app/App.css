@@ -8,6 +8,15 @@ li {
 img {
   width: 100%;
 }
+.btn {
+  font-family: "roboto";
+  font-weight: 900;
+  text-transform: uppercase;
+  font-size: 12px;
+  border: none;
+  border-radius: 25px;
+  padding: 12px 24px;
+}
 
 .navbar img {
   width: 25%;
@@ -30,7 +39,27 @@ img {
   margin-top: 65px;
 }
 
-.nav-item a {
+.secondary-nav-item a {
+  color: #174ef1;
+  text-decoration: none;
+  font-family: "roboto";
+  font-weight: bolder;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  font-size: 14px;
+}
+.secondary-nav-item a:hover,
+#primary-nav-item a:hover {
+  color: #d4792f;
+}
+.primarynav {
+  border-top: #bf74df solid 1px;
+  border-bottom: #bf74df solid 1px;
+  border-right: none;
+  border-left: none;
+}
+
+#primary-nav-item a {
   color: black;
   text-decoration: none;
   font-family: "roboto";
@@ -38,6 +67,15 @@ img {
   text-transform: uppercase;
   letter-spacing: 0.05em;
 }
-.nav-item a:hover {
-  color: royalblue;
+.btn-save {
+  background-color: #cfe077;
+}
+.btn-save:hover {
+  background-color: #174ef1;
+  color: white;
+}
+.btn-pub {
+  background-color: #174ef1;
+  color: white;
+  margin-left: 20px;
 }

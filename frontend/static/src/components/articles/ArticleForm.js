@@ -64,7 +64,7 @@ export default function ArticleForm(props) {
 
   return (
     <div className="container">
-      <form className="mt-5 col-8">
+      <form className="mt-5 col-8 container">
         <label>Submit an Article</label>
         <input
           onChange={handleChange}
@@ -93,7 +93,7 @@ export default function ArticleForm(props) {
         {article.image && <img src={preview} alt="" />}
         <button
           type="button"
-          className="btn btn-warning mt-3"
+          className="btn btn-save mt-3"
           name="DRA"
           value="DRA"
           onClick={handleSubmit}
@@ -102,7 +102,7 @@ export default function ArticleForm(props) {
         </button>
         <button
           type="button"
-          className="btn btn-success mt-3"
+          className="btn btn-pub mt-3"
           name="DRA"
           value="SUB"
           onClick={handleSubmit}
