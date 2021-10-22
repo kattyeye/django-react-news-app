@@ -50,7 +50,7 @@ function LoginForm(props) {
   }
 
   return (
-    <form className="mt-3 col-6" onSubmit={handleSubmit}>
+    <form className="mt-3 col-6 container" onSubmit={handleSubmit}>
       <div className="form-group text-left mb-3">
         <label htmlFor="username">username</label>
         <input
@@ -85,6 +85,9 @@ function LoginForm(props) {
       <button
         type="button"
         className="btn btn-primary mt-3 register-here-button"
+        onClick={() => {
+          props.history.push("/registration");
+        }}
       >
         Click to register.
       </button>

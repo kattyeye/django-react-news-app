@@ -50,63 +50,65 @@ export default function RegistrationForm(props) {
     }
   }
   return (
-    <form className="mt-3 col-6 container" onSubmit={handleSubmit}>
-      <div className="form-group text-left mb-3">
-        <label htmlFor="username">username</label>
-        <input
-          type="text"
-          className="form-control"
-          id="username"
-          placeholder="enter username."
-          onChange={handleInput}
-          required
-          name="username"
-          value={user.username}
-        />
-      </div>
-      <div className="form-group text-left mb-3">
-        <label htmlFor="email">email</label>
-        <input
-          type="text"
-          className="form-control"
-          id="email"
-          placeholder="enter email."
-          onChange={handleInput}
-          required
-          name="email"
-          value={user.email}
-        />
-      </div>
-      <div className="form-group text-left mb-3">
-        <label htmlFor="password1">password</label>
-        <input
-          type="password"
-          className="form-control"
-          id="password1"
-          placeholder="enter password."
-          onChange={handleInput}
-          required
-          name="password1"
-          value={user.password1}
-        />
-      </div>
-      <div className="form-group text-left mb-3">
-        <label htmlFor="password2">confirm password</label>
-        <input
-          type="password"
-          className="form-control"
-          id="password2"
-          placeholder="confirm password."
-          onChange={handleInput}
-          required
-          name="password2"
-          value={user.password2}
-        />
-        {error && <span className="text-danger">{error}</span>}
-      </div>
-      <button type="submit" className="btn btn-primary mt-3">
-        Register
-      </button>
-    </form>
+    <div className="container">
+      <form className="mt-3 col-6 " onSubmit={handleSubmit}>
+        <div className="form-group text-left mb-3 ">
+          <label htmlFor="username">username</label>
+          <input
+            type="text"
+            className="form-control"
+            id="username"
+            placeholder="enter username."
+            onChange={handleInput}
+            required
+            name="username"
+            value={user.username}
+          />
+        </div>
+        <div className="form-group text-left mb-3">
+          <label htmlFor="email">email</label>
+          <input
+            type="text"
+            className="form-control"
+            id="email"
+            placeholder="enter email."
+            onChange={handleInput}
+            required
+            name="email"
+            value={user.email}
+          />
+        </div>
+        <div className="form-group text-left mb-3">
+          <label htmlFor="password1">password</label>
+          <input
+            type="password"
+            className="form-control"
+            id="password1"
+            placeholder="enter password."
+            onChange={handleInput}
+            required
+            name="password1"
+            value={user.password1}
+          />
+        </div>
+        <div className="form-group text-left mb-3">
+          <label htmlFor="password2">confirm password</label>
+          <input
+            type="password"
+            className="form-control"
+            id="password2"
+            placeholder="confirm password."
+            onChange={handleInput}
+            required
+            name="password2"
+            value={user.password2}
+          />
+          {error && <span className="text-danger">{error}</span>}
+        </div>
+        <button type="submit" className="btn btn-primary mt-3">
+          Register
+        </button>
+      </form>
+    </div>
   );
 }

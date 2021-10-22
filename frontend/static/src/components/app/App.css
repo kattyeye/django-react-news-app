@@ -59,7 +59,8 @@ img {
   border-left: none;
 }
 
-#primary-nav-item a {
+#primary-nav-item a,
+.logout a {
   color: black;
   text-decoration: none;
   font-family: "roboto";

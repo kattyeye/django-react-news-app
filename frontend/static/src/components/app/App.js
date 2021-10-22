@@ -11,7 +11,9 @@ import ProfilePage from "../profile-form/ProfilePage";
 import Admin from "../articles/Admin";
 import ArticleListAuth from "../articles/ArticleListAuth";
 import PrimaryHeader from "../header/PrimaryHeader";
-function App() {
+import Cookies from "js-cookie";
+import ArticleListAdmin from "../articles/ArticleListAdmin";
+function App(props) {
   const [isAuth, setIsAuth] = useState(null);
   const history = useHistory();
   useEffect(() => {
@@ -28,6 +30,27 @@ function App() {
     checkAuth();
   }, [history]);
 
+  async function handleLogoutSubmit(event) {
+    // event.preventDefault();
+    const options = {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "X-CSRFToken": Cookies.get("csrftoken"),
+      },
+      body: JSON.stringify(props.user),
+    };
+    const response = await fetch("/rest-auth/logout/", options);
+    if (!response) {
+      console.log(response);
+    } else {
+      console.log(response);
+      const data = await response.json();
+      Cookies.remove("Authorization");
+      setIsAuth(false);
+      history.push("/login");
+    }
+  }
   // let html;
   // if (state.selection === "login") {
   //   html = <LoginForm setState={setState} />;
@@ -40,7 +63,7 @@ function App() {
   // }
   return (
     <>
-      <SecondaryHeader />
+      <SecondaryHeader handleLogoutSubmit={handleLogoutSubmit} />
       <PrimaryHeader />
       <Switch>
         <Route path="/registration">
@@ -53,13 +76,20 @@ function App() {
           {/* <ProfileForm /> */}
           <ArticleForm history={history} />
           <ProfilePage isAuth={isAuth} />
-          <Admin isAuth={isAuth} />
+          <Admin isAuth={isAuth} handleLogoutSubmit={handleLogoutSubmit} />
         </Route>
         <Route path="/articles/:phase?/:category?">
-          <ArticleListAuth isAuth={isAuth} history={history} />
+          <ArticleListAuth
+            isAuth={isAuth}
+            history={history}
+            handleLogoutSubmit={handleLogoutSubmit}
+          />
         </Route>
         <Route path="/articles/:phase?/:category?">
           <ArticleList />
+        </Route>
+        <Route path="/articles/admin">
+          <ArticleListAdmin />
         </Route>
       </Switch>
     </>

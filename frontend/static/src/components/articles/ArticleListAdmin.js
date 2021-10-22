@@ -15,7 +15,7 @@ function ArticleListAdmin(props) {
 
   useEffect(() => {
     async function fetchArticles() {
-      const response = await fetch(`/api_v1/articles/`);
+      const response = await fetch(`/api_v1/articles/admin/`);
       const data = await response.json();
       console.log("articles", data);
       setArticleList(data);
@@ -24,6 +24,40 @@ function ArticleListAdmin(props) {
   }, []);
 
   async function changeToPublished(e) {
+    e.preventDefault();
+    const options = {
+      method: "POST",
+      headers: {
+        "X-CSRFToken": Cookies.get("csrftoken"),
+      },
+      body: articleList.article,
+    };
+    const response = await fetch(`/api_v1/articles/`, options);
+    if (!response) {
+      console.log(response);
+    } else {
+      const data = await response.json();
+      //   props.setArticle(data);
+    }
+  }
+  async function changeToRejected(e) {
+    e.preventDefault();
+    const options = {
+      method: "POST",
+      headers: {
+        "X-CSRFToken": Cookies.get("csrftoken"),
+      },
+      body: articleList.article,
+    };
+    const response = await fetch(`/api_v1/articles/`, options);
+    if (!response) {
+      console.log(response);
+    } else {
+      const data = await response.json();
+      //   props.setArticle(data);
+    }
+  }
+  async function changeToArchived(e) {
     e.preventDefault();
     const options = {
       method: "POST",
@@ -74,7 +108,7 @@ function ArticleListAdmin(props) {
                 type="button"
                 className="btn btn-warning mt-3"
                 name="SUB"
-                value="PUB"
+                value="REJ"
                 onClick={changeToRejected}
               >
                 Reject
@@ -83,7 +117,7 @@ function ArticleListAdmin(props) {
                 type="button"
                 className="btn btn-primary mt-3"
                 name="SUB"
-                value="PUB"
+                value="ARC"
                 onClick={changeToArchived}
               >
                 Archive

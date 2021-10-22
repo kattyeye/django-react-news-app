@@ -31,10 +31,8 @@ class ArticleListAPIView(generics.ListCreateAPIView):
 class ArticleListAdminAPIView(generics.ListCreateAPIView):
     # queryset = Article.objects.all()
     serializer_class = ArticleSerializer
-    permission_classes = (IsAdminUser,)  # tuple
-
-    def get_queryset(self):
-        return Article.objects.all()
+    permission_classes = (IsOwnerOrReadOnly,)  # tuple
+    queryset = Article.objects.all()
 
     def perform_create(self, serializer):
         serializer.save(author=self.request.user)
@@ -43,7 +41,7 @@ class ArticleListAdminAPIView(generics.ListCreateAPIView):
 class ArticleDetailAPIView(generics.RetrieveUpdateDestroyAPIView):
     # queryset = Article.objects.all()
     serializer_class = ArticleSerializer
-    permission_classes = (IsAdminUser,)  # tuple
+    # permission_classes = (IsAdminUser)  # tuple
 
     def get_queryset(self):
         queryset = Article.objects.all()

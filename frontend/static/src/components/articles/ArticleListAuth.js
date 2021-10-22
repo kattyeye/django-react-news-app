@@ -33,55 +33,56 @@ function ArticleListAuth(props) {
   async function submitToAdmin(e) {
     e.preventDefault();
     const options = {
-      method: "POST",
+      method: "PUT",
       headers: {
         "X-CSRFToken": Cookies.get("csrftoken"),
       },
       body: articleList.article,
     };
-    const response = await fetch(`/api_v1/articles/`, options);
+    const response = await fetch(
+      `/api_v1/articles/${e.target.value}/`,
+      options
+    );
     if (!response) {
       console.log(response);
     } else {
       const data = await response.json();
-      //   props.setArticle(data);
+      setArticleList(data);
     }
   }
 
   return (
     <div className="container mt-5">
       <div className="articleholder">
-        <form>
-          {articleList.map((article) => (
-            <div className="content col-8" key={article.id}>
-              <section className="blog-hero-section">
-                <h2>{article.title}</h2>
+        {articleList.map((article) => (
+          <div className="content col-8" key={article.id}>
+            <section className="blog-hero-section">
+              <h2>{article.title}</h2>
 
-                <img
-                  id="hero-img"
-                  src={article.image}
-                  alt="image-for-news-article"
-                />
-              </section>
-              <section className="text">
-                <p style={{ fontStyle: "italic" }}>
-                  by {article.author} <br></br> phase: {article.phase}
-                </p>
-                <p className="info">{article.body}</p>
+              <img
+                id="hero-img"
+                src={article.image}
+                alt="image-for-news-article"
+              />
+            </section>
+            <section className="text">
+              <p style={{ fontStyle: "italic" }}>
+                by {article.author} <br></br> phase: {article.phase}
+              </p>
+              <p className="info">{article.body}</p>
 
-                {/* <button
-                  type="button"
-                  className="btn btn-success mt-3"
-                  name="DRA"
-                  value="SUB"
-                  onClick={submitToAdmin}
-                >
-                  Submit for Publishing
-                </button> */}
-              </section>
-            </div>
-          ))}
-        </form>
+              <button
+                type="button"
+                className="btn btn-success mt-3"
+                name="DRA"
+                value={article.id}
+                onClick={submitToAdmin}
+              >
+                Submit for Publishing
+              </button>
+            </section>
+          </div>
+        ))}
       </div>
     </div>
   );

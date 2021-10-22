@@ -1,6 +1,6 @@
 import { NavLink } from "react-router-dom";
-
-export default function SecondaryHeader() {
+import Cookies from "js-cookie";
+export default function SecondaryHeader(props) {
   return (
     <nav className="navbar navbar-expand-lg ">
       <div className="container">
@@ -10,6 +10,9 @@ export default function SecondaryHeader() {
               <NavLink to="/articles/published">Home</NavLink>
             </li>
             <li className="nav-item secondary-nav-item p-3">
+              <NavLink to="/articles/admin">Admin</NavLink>
+            </li>
+            <li className="nav-item secondary-nav-item p-3">
               <NavLink to="/account">My Account</NavLink>
             </li>
             <li>
@@ -17,11 +20,24 @@ export default function SecondaryHeader() {
                 <img src="media/3.png" />
               </NavLink>
             </li>
-            <li className="nav-item secondary-nav-item p-3">
-              <NavLink to="/login">Login</NavLink>
-            </li>
+            {!props.user && (
+              <li className="nav-item secondary-nav-item p-3">
+                <NavLink to="/login">Login</NavLink>
+              </li>
+            )}
+
             <li className="nav-item secondary-nav-item p-3">
               <NavLink to="/articles/drafts">My Drafts</NavLink>
+            </li>
+
+            <li className="btn-logout">
+              <button
+                className="btn btn-link logout"
+                type="button"
+                onClick={() => props.handleLogoutSubmit()}
+              >
+                Logout
+              </button>
             </li>
           </ul>
         </div>
