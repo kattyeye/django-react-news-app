@@ -18,7 +18,7 @@ function ArticleListAdmin(props) {
       const response = await fetch(`/api_v1/articles/admin/`);
       const data = await response.json();
       console.log("articles", data);
-      setArticleList(data);
+      props.setArticleList(data);
     }
     fetchArticles();
   }, []);
@@ -26,11 +26,11 @@ function ArticleListAdmin(props) {
   async function changeToPublished(e) {
     e.preventDefault();
     const options = {
-      method: "POST",
+      method: "PUT",
       headers: {
         "X-CSRFToken": Cookies.get("csrftoken"),
       },
-      body: articleList.article,
+      body: props.articleList.article,
     };
     const response = await fetch(`/api_v1/articles/`, options);
     if (!response) {
@@ -43,11 +43,11 @@ function ArticleListAdmin(props) {
   async function changeToRejected(e) {
     e.preventDefault();
     const options = {
-      method: "POST",
+      method: "PUT",
       headers: {
         "X-CSRFToken": Cookies.get("csrftoken"),
       },
-      body: articleList.article,
+      body: props.articleList.article,
     };
     const response = await fetch(`/api_v1/articles/`, options);
     if (!response) {
@@ -60,11 +60,11 @@ function ArticleListAdmin(props) {
   async function changeToArchived(e) {
     e.preventDefault();
     const options = {
-      method: "POST",
+      method: "PUT",
       headers: {
         "X-CSRFToken": Cookies.get("csrftoken"),
       },
-      body: articleList.article,
+      body: props.articleList.article,
     };
     const response = await fetch(`/api_v1/articles/`, options);
     if (!response) {
@@ -78,7 +78,7 @@ function ArticleListAdmin(props) {
   return (
     <div className="container mt-5">
       <div className="articleholder">
-        {articleList.map((article) => (
+        {props.articleList.map((article) => (
           <div className="content col-8" key={article.id}>
             <section className="blog-hero-section">
               <h2>{article.title}</h2>

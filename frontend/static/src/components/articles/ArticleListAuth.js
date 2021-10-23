@@ -32,29 +32,69 @@ function ArticleListAuth(props) {
 
   async function submitToAdmin(e) {
     e.preventDefault();
+    const article = articleList.find(
+      (item) => item.id === parseInt(e.target.value)
+    );
+
     const options = {
       method: "PUT",
       headers: {
+        "Content-Type": "application/json",
         "X-CSRFToken": Cookies.get("csrftoken"),
       },
-      body: articleList.article,
+      body: JSON.stringify(article.phase),
     };
     const response = await fetch(
-      `/api_v1/articles/${e.target.value}/`,
+      `/api_v1/articles/${e.target.value}/phase`,
       options
     );
     if (!response) {
       console.log(response);
     } else {
       const data = await response.json();
+      console.log({ data });
       setArticleList(data);
     }
   }
 
+  const draftArticles = articleList.filter(
+    (article) => article.phase === "DRA"
+  );
+  const publishedArticles = articleList.filter(
+    (article) => article.phase === "PUB"
+  );
+
   return (
     <div className="container mt-5">
       <div className="articleholder">
-        {articleList.map((article) => (
+        {draftArticles?.map((article) => (
+          <div className="content col-8" key={article.id}>
+            <section className="blog-hero-section">
+              <input value={article.title} />
+
+              <input value={article.image} />
+            </section>
+            <section className="text">
+              <p style={{ fontStyle: "italic" }}>
+                by {article.author} <br></br> phase: {article.phase}
+              </p>
+              <input value={article.body} />
+
+              <button
+                type="button"
+                className="btn btn-success mt-3"
+                name="DRA"
+                value={article.id}
+                onClick={submitToAdmin}
+              >
+                Submit for Publishing
+              </button>
+            </section>
+          </div>
+        ))}
+      </div>
+      <div className="articleholder">
+        {publishedArticles?.map((article) => (
           <div className="content col-8" key={article.id}>
             <section className="blog-hero-section">
               <h2>{article.title}</h2>
@@ -74,11 +114,29 @@ function ArticleListAuth(props) {
               <button
                 type="button"
                 className="btn btn-success mt-3"
-                name="DRA"
-                value={article.id}
-                onClick={submitToAdmin}
+                name="SUB"
+                value="PUB"
+                // onClick={changeToPublished}
               >
-                Submit for Publishing
+                Publish
+              </button>
+              <button
+                type="button"
+                className="btn btn-warning mt-3"
+                name="SUB"
+                value="REJ"
+                // onClick={changeToRejected}
+              >
+                Reject
+              </button>
+              <button
+                type="button"
+                className="btn btn-primary mt-3"
+                name="SUB"
+                value="ARC"
+                // onClick={changeToArchived}
+              >
+                Archive
               </button>
             </section>
           </div>

@@ -41,11 +41,12 @@ class ArticleListAdminAPIView(generics.ListCreateAPIView):
 class ArticleDetailAPIView(generics.RetrieveUpdateDestroyAPIView):
     # queryset = Article.objects.all()
     serializer_class = ArticleSerializer
-    # permission_classes = (IsAdminUser)  # tuple
+    permission_classes = (IsOwnerOrReadOnly,)  # tuple
 
     def get_queryset(self):
         queryset = Article.objects.all()
-        phase = self.request.query_params.get('sub')
+        print(self.request.query_params)
+        phase = self.request.query_params.get('phase')
         if phase is not None:
             queryset = queryset.filter(publishing_phase=phase)
         return queryset

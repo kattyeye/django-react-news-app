@@ -13,6 +13,7 @@ import ArticleListAuth from "../articles/ArticleListAuth";
 import PrimaryHeader from "../header/PrimaryHeader";
 import Cookies from "js-cookie";
 import ArticleListAdmin from "../articles/ArticleListAdmin";
+import PrivateRoute from "../privateroute/PrivateRoute";
 function App(props) {
   const [isAuth, setIsAuth] = useState(null);
   const history = useHistory();
@@ -72,12 +73,12 @@ function App(props) {
         <Route path="/login">
           <LoginForm isAuth={isAuth} setIsAuth={setIsAuth} />
         </Route>
-        <Route path="/account">
+        <PrivateRoute path="/account">
           {/* <ProfileForm /> */}
-          <ArticleForm history={history} />
+          <ArticleForm history={history} isAuth={isAuth} />
           <ProfilePage isAuth={isAuth} />
           <Admin isAuth={isAuth} handleLogoutSubmit={handleLogoutSubmit} />
-        </Route>
+        </PrivateRoute>
         <Route path="/articles/:phase?/:category?">
           <ArticleListAuth
             isAuth={isAuth}
@@ -85,9 +86,13 @@ function App(props) {
             handleLogoutSubmit={handleLogoutSubmit}
           />
         </Route>
-        <Route path="/articles/:phase?/:category?">
+        {/* <Route path="/articles/published/:category?">
+          <ArticleList />
+        </Route> */}
+        <Route path="/">
           <ArticleList />
         </Route>
+
         <Route path="/articles/admin">
           <ArticleListAdmin />
         </Route>

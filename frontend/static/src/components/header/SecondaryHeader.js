@@ -7,7 +7,7 @@ export default function SecondaryHeader(props) {
         <div className="collapse navbar-collapse" id="navbarResponsive">
           <ul className="navbar-nav ml-auto">
             <li className="nav-item secondary-nav-item p-3">
-              <NavLink to="/articles/published">Home</NavLink>
+              <NavLink to="/">Home</NavLink>
             </li>
             <li className="nav-item secondary-nav-item p-3">
               <NavLink to="/articles/admin">Admin</NavLink>
@@ -20,11 +20,10 @@ export default function SecondaryHeader(props) {
                 <img src="media/3.png" />
               </NavLink>
             </li>
-            {!props.user && (
-              <li className="nav-item secondary-nav-item p-3">
-                <NavLink to="/login">Login</NavLink>
-              </li>
-            )}
+
+            <li className="nav-item secondary-nav-item p-3">
+              <NavLink to="/login">Login</NavLink>
+            </li>
 
             <li className="nav-item secondary-nav-item p-3">
               <NavLink to="/articles/drafts">My Drafts</NavLink>

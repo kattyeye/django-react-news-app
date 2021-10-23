@@ -62,6 +62,10 @@ export default function ArticleForm(props) {
     props.history.push("/drafts");
   }
 
+  // if (!props.isAuth) {
+  //   props.history.push("/login");
+  // }
+
   return (
     <div className="container">
       <form className="mt-5 col-8 container">
