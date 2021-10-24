@@ -35,34 +35,34 @@ function ArticleListAuth(props) {
     const article = articleList.find(
       (item) => item.id === parseInt(e.target.value)
     );
-
     const options = {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
         "X-CSRFToken": Cookies.get("csrftoken"),
       },
-      body: JSON.stringify(article.phase),
+      body: JSON.stringify(article),
     };
     const response = await fetch(
-      `/api_v1/articles/${e.target.value}/phase`,
+      `/api_v1/articles/${e.target.value}/`,
       options
     );
     if (!response) {
       console.log(response);
     } else {
+      props.handleImage(article.image);
       const data = await response.json();
       console.log({ data });
-      setArticleList(data);
+      // setArticleList(data);
     }
   }
 
   const draftArticles = articleList.filter(
     (article) => article.phase === "DRA"
   );
-  const publishedArticles = articleList.filter(
-    (article) => article.phase === "PUB"
-  );
+  // const publishedArticles = articleList.filter(
+  //   (article) => article.phase === "PUB"
+  // );
 
   return (
     <div className="container mt-5">
@@ -71,7 +71,6 @@ function ArticleListAuth(props) {
           <div className="content col-8" key={article.id}>
             <section className="blog-hero-section">
               <input value={article.title} />
-
               <input value={article.image} />
             </section>
             <section className="text">
@@ -93,7 +92,7 @@ function ArticleListAuth(props) {
           </div>
         ))}
       </div>
-      <div className="articleholder">
+      {/* <div className="articleholder">
         {publishedArticles?.map((article) => (
           <div className="content col-8" key={article.id}>
             <section className="blog-hero-section">
@@ -141,7 +140,7 @@ function ArticleListAuth(props) {
             </section>
           </div>
         ))}
-      </div>
+      </div> */}
     </div>
   );
 }

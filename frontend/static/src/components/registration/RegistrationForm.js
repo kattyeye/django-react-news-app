@@ -1,5 +1,6 @@
 import { useState } from "react";
 import Cookies from "js-cookie";
+import { useHistory } from "react-router";
 
 export default function RegistrationForm(props) {
   const [user, setUser] = useState({
@@ -8,7 +9,7 @@ export default function RegistrationForm(props) {
     password1: "",
     password2: "",
   });
-
+  let history = useHistory;
   const [error, setError] = useState(null);
 
   function handleInput(event) {
@@ -46,6 +47,7 @@ export default function RegistrationForm(props) {
       } else {
         const data = await response.json();
         Cookies.set("Authorization", `Token${data.key}`);
+        history.push("/");
       }
     }
   }

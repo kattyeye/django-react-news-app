@@ -10,7 +10,7 @@ export default function PrimaryHeader() {
         >
           <ul className="navbar-nav ml-auto">
             <li className="nav-item p-3" id="primary-nav-item">
-              <NavLink to="/articles/published/local">Local</NavLink>
+              <NavLink to="/articles/published/?:category/">Local</NavLink>
             </li>
             <li className="nav-item p-3" id="primary-nav-item">
               <NavLink to="/articles/published/food">Food</NavLink>

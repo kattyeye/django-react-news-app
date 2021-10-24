@@ -41,7 +41,7 @@ function LoginForm(props) {
       const data = await response.json();
       Cookies.set("Authorization", `Token${data.key}`);
       props.setIsAuth(true);
-      props.history.push("/account");
+      //   props.history.push("/account");
     }
   }
 
@@ -52,7 +52,7 @@ function LoginForm(props) {
   return (
     <form className="mt-3 col-6 container" onSubmit={handleSubmit}>
       <div className="form-group text-left mb-3">
-        <label htmlFor="username">username</label>
+        {/* <label htmlFor="username">username</label> */}
         <input
           type="text"
           className="form-control"
@@ -66,7 +66,7 @@ function LoginForm(props) {
       </div>
 
       <div className="form-group text-left mb-3">
-        <label htmlFor="password">password</label>
+        {/* <label htmlFor="password">password</label> */}
         <input
           type="password"
           className="form-control"

@@ -41,7 +41,7 @@ function ArticleList(props) {
     <div className="container mt-5">
       <div className="articleholder">
         {articleList.map((article) => (
-          <div className="content col-8" key={article.id}>
+          <div className="content " key={article.id}>
             <section className="blog-hero-section">
               <h2>{article.title}</h2>
 
@@ -54,16 +54,9 @@ function ArticleList(props) {
             <section className="text">
               <p style={{ fontStyle: "italic" }}>by {article.author}</p>
               <p className="info">{article.body}</p>
-              <a
-                type="button"
-                className="btn btn-primary"
-                data-toggle="modal"
-                data-target="#exampleModal"
-                className="cont-button"
-              >
+              <button type="button" className="btn btn-primary">
                 Continue Reading
-              </a>
-              <div className="bar"></div>
+              </button>
             </section>
           </div>
         ))}

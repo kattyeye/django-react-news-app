@@ -73,12 +73,12 @@ function App(props) {
         <Route path="/login">
           <LoginForm isAuth={isAuth} setIsAuth={setIsAuth} />
         </Route>
-        <PrivateRoute path="/account">
+        <Route path="/account">
           {/* <ProfileForm /> */}
           <ArticleForm history={history} isAuth={isAuth} />
           <ProfilePage isAuth={isAuth} />
           <Admin isAuth={isAuth} handleLogoutSubmit={handleLogoutSubmit} />
-        </PrivateRoute>
+        </Route>
         <Route path="/articles/:phase?/:category?">
           <ArticleListAuth
             isAuth={isAuth}
@@ -86,9 +86,9 @@ function App(props) {
             handleLogoutSubmit={handleLogoutSubmit}
           />
         </Route>
-        {/* <Route path="/articles/published/:category?">
+        <Route path="/articles/published/:category?">
           <ArticleList />
-        </Route> */}
+        </Route>
         <Route path="/">
           <ArticleList />
         </Route>

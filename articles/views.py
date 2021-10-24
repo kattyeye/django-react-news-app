@@ -41,12 +41,25 @@ class ArticleListAdminAPIView(generics.ListCreateAPIView):
 class ArticleDetailAPIView(generics.RetrieveUpdateDestroyAPIView):
     # queryset = Article.objects.all()
     serializer_class = ArticleSerializer
-    permission_classes = (IsOwnerOrReadOnly,)  # tuple
+    permission_classes = (IsOwnerOrReadOnly | IsAdminUser)  # tuple
+    # queryset = Article.objects.all()
+    # print(self.request.query_params)
+    # phase = self.request.query_params.get('phase')
+    # if phase is not None:
+    #     queryset = queryset.filter(publishing_phase=phase)
+    # return queryset
 
     def get_queryset(self):
-        queryset = Article.objects.all()
-        print(self.request.query_params)
-        phase = self.request.query_params.get('phase')
-        if phase is not None:
-            queryset = queryset.filter(publishing_phase=phase)
-        return queryset
+        # import pdb
+        # pdb.set_trace()
+        if not self.request.user.is_anonymous:
+            queryset = Article.objects.all()
+            phase_text = self.request.query_params.get('phase')
+            if phase_text is not None:
+                queryset = queryset.filter(
+                    phase=phase_text, author=self.request.user)
+            return queryset
+        return Article.objects.filter(phase='PUB')
+
+    def perform_create(self, serializer):
+        serializer.save(author=self.request.user)

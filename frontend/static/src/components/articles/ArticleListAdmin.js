@@ -32,7 +32,10 @@ function ArticleListAdmin(props) {
       },
       body: props.articleList.article,
     };
-    const response = await fetch(`/api_v1/articles/`, options);
+    const response = await fetch(
+      `/api_v1/articles/${e.target.value}/`,
+      options
+    );
     if (!response) {
       console.log(response);
     } else {
@@ -40,6 +43,7 @@ function ArticleListAdmin(props) {
       //   props.setArticle(data);
     }
   }
+
   async function changeToRejected(e) {
     e.preventDefault();
     const options = {
@@ -49,7 +53,10 @@ function ArticleListAdmin(props) {
       },
       body: props.articleList.article,
     };
-    const response = await fetch(`/api_v1/articles/`, options);
+    const response = await fetch(
+      `/api_v1/articles/${e.target.value}/`,
+      options
+    );
     if (!response) {
       console.log(response);
     } else {
@@ -66,7 +73,10 @@ function ArticleListAdmin(props) {
       },
       body: props.articleList.article,
     };
-    const response = await fetch(`/api_v1/articles/`, options);
+    const response = await fetch(
+      `/api_v1/articles/${e.target.value}/`,
+      options
+    );
     if (!response) {
       console.log(response);
     } else {
@@ -79,7 +89,7 @@ function ArticleListAdmin(props) {
     <div className="container mt-5">
       <div className="articleholder">
         {props.articleList.map((article) => (
-          <div className="content col-8" key={article.id}>
+          <div className="content" key={article.id}>
             <section className="blog-hero-section">
               <h2>{article.title}</h2>
 

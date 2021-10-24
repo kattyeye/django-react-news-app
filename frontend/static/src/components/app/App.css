@@ -1,6 +1,9 @@
 * {
   box-sizing: border-box;
 }
+body {
+  margin-bottom: 60px;
+}
 
 li {
   list-style: none;
@@ -8,6 +11,10 @@ li {
 img {
   width: 100%;
 }
+h2 {
+  color: black;
+}
+
 .btn {
   font-family: "roboto";
   font-weight: 900;
@@ -68,6 +75,14 @@ img {
   text-transform: uppercase;
   letter-spacing: 0.05em;
 }
+.btn {
+  border: 1px solid black;
+  text-decoration: none;
+  margin-right: 5px;
+}
+.btn:hover {
+  border: #bf74df solid 1px;
+}
 .btn-save {
   background-color: #cfe077;
 }
@@ -77,6 +92,38 @@ img {
 }
 .btn-pub {
   background-color: #174ef1;
+  border: 1px solid black;
   color: white;
   margin-left: 20px;
+}
+.articleholder div {
+  padding: 3% 5%;
+  border: #d4792f 1px solid;
+  border-radius: 5px;
+  margin-bottom: 80px;
+}
+input.form-control {
+  border: none;
+  border-bottom: 1px solid black;
+  border-radius: 0px;
+  color: black;
+}
+input.form-control::placeholder {
+  color: black;
+}
+
+textarea.form-control {
+  border: none;
+  border-bottom: 1px solid black;
+  border-radius: 0px;
+}
+textarea.form-control::placeholder {
+  color: black;
+}
+
+.article-form-label {
+  font-size: 30px;
+}
+.hear {
+  margin-bottom: 50px;
 }

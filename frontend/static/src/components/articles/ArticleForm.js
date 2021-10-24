@@ -69,7 +69,8 @@ export default function ArticleForm(props) {
   return (
     <div className="container">
       <form className="mt-5 col-8 container">
-        <label>Submit an Article</label>
+        <label className="article-form-label">Submit an Article</label>
+        <p className="hear">we want to hear about it.</p>
         <input
           onChange={handleChange}
           value={article.title}
