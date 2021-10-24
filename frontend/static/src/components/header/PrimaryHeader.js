@@ -10,19 +10,19 @@ export default function PrimaryHeader() {
         >
           <ul className="navbar-nav ml-auto">
             <li className="nav-item p-3" id="primary-nav-item">
-              <NavLink to="/articles/published/?:category/">Local</NavLink>
+              <NavLink to="/local">Local</NavLink>
             </li>
             <li className="nav-item p-3" id="primary-nav-item">
-              <NavLink to="/articles/published/food">Food</NavLink>
+              <NavLink to="/food">Food</NavLink>
             </li>
             <li className="nav-item p-3" id="primary-nav-item">
-              <NavLink to="/articles/published/travel">Travel</NavLink>
+              <NavLink to="/travel">Travel</NavLink>
             </li>
             <li className="nav-item p-3" id="primary-nav-item">
-              <NavLink to="/articles/published/fashion">Fashion</NavLink>
+              <NavLink to="/fashion">Fashion</NavLink>
             </li>
             <li className="nav-item p-3" id="primary-nav-item">
-              <NavLink to="/articles/published/global">Global</NavLink>
+              <NavLink to="/global">Global</NavLink>
             </li>
           </ul>
         </div>

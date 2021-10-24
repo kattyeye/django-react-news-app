@@ -37,14 +37,27 @@ function ArticleList(props) {
     fetchArticles();
   }, []);
 
+  const [likes, setLikes] = useState([]);
+
+  function addLike() {
+    const numLikes = likes.length + 1;
+    setLikes([...likes, numLikes]);
+  }
+
+  function likeOrLikes() {
+    if (likes.length === 1) {
+      return likes.length + " Like";
+    } else {
+      return <span>{likes.length} Likes</span>;
+    }
+  }
   return (
     <div className="container mt-5">
       <div className="articleholder">
         {articleList.map((article) => (
           <div className="content " key={article.id}>
             <section className="blog-hero-section">
-              <h2>{article.title}</h2>
-
+              <h2 className="article-title">{article.title}</h2>
               <img
                 id="hero-img"
                 src={article.image}
@@ -54,10 +67,13 @@ function ArticleList(props) {
             <section className="text">
               <p style={{ fontStyle: "italic" }}>by {article.author}</p>
               <p className="info">{article.body}</p>
-              <button type="button" className="btn btn-primary">
-                Continue Reading
-              </button>
             </section>
+            <button type="button" className="btn btn-primary">
+              Continue Reading
+            </button>
+            <button onClick={addLike} type="button" className=" btn like-btn">
+              {likeOrLikes()}
+            </button>
           </div>
         ))}
       </div>

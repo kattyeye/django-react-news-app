@@ -16,7 +16,7 @@ export default function SecondaryHeader(props) {
               <NavLink to="/account">My Account</NavLink>
             </li>
             <li>
-              <NavLink className="navbar-brand" to="/articles/published">
+              <NavLink className="navbar-brand" to="/">
                 <img src="media/3.png" />
               </NavLink>
             </li>
