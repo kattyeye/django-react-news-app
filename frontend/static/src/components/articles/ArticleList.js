@@ -20,14 +20,19 @@ function ArticleList(props) {
 
   useEffect(() => {
     const catKey = props.match.params.category;
-    const key = props.match.params.phase;
+    // const key = props.match.params.phase;
     // alert(cat);
 
     let url = `/api_v1/articles/`;
-    if (key) {
-      url = `/api_v1/articles/?phase=${phases[key]}/?category=${categories[catKey]}`;
-      // alert(url);
+    if (catKey) {
+      url = `/api_v1/articles/?category=${categories[catKey]}`;
+      // } else if (catKey) {
+      //   url = `/api_v1/articles/?phase=${categories[catKey]}`;
     }
+    // alert(url);
+    // } else if (catKey) {
+    //   url = `/api_v1/articles/?category=${categories[catKey]}`;
+    // }
     async function fetchArticles() {
       const response = await fetch(url);
       const data = await response.json();
@@ -58,14 +63,25 @@ function ArticleList(props) {
           <div className="content " key={article.id}>
             <section className="blog-hero-section">
               <h2 className="article-title">{article.title}</h2>
-              <img
-                id="hero-img"
-                src={article.image}
-                alt="image-for-news-article"
-              />
+              {article.image && (
+                <img
+                  id="hero-img"
+                  src={article.image}
+                  alt="image-for-news-article"
+                />
+              )}
             </section>
             <section className="text">
-              <p style={{ fontStyle: "italic" }}>by {article.author}</p>
+              <span
+                style={{ fontStyle: "italic" }}
+                className="author-name-text"
+              >
+                submitted by <strong>@{article.author}</strong>
+              </span>
+              {/* <br></br>
+              <span style={{ fontStyle: "italic" }}>
+                category: {article.category}
+              </span> */}
               <p className="info">{article.body}</p>
             </section>
             <button type="button" className="btn btn-primary">

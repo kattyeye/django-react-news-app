@@ -16,6 +16,7 @@ import ArticleListAdmin from "../articles/ArticleListAdmin";
 import PrivateRoute from "../privateroute/PrivateRoute";
 function App(props) {
   const [isAuth, setIsAuth] = useState(null);
+  const [isAdmin, setIsAdmin] = useState(null);
   const history = useHistory();
   useEffect(() => {
     const checkAuth = async () => {
@@ -29,6 +30,20 @@ function App(props) {
       }
     };
     checkAuth();
+  }, [history]);
+
+  useEffect(() => {
+    const checkAdminStatus = async () => {
+      const response = await fetch("/rest-auth/user");
+      if (!response.ok) {
+        setIsAdmin(false);
+        // history.push("/login");
+      } else if (response == "admin") {
+        setIsAdmin(true);
+        // history.push("/account");
+      }
+    };
+    checkAdminStatus();
   }, [history]);
 
   async function handleLogoutSubmit(event) {
@@ -52,16 +67,7 @@ function App(props) {
       history.push("/login");
     }
   }
-  // let html;
-  // if (state.selection === "login") {
-  //   html = <LoginForm setState={setState} />;
-  // } else if (state.selection === "register") {
-  //   html = <RegistrationForm setState={setState} />;
-  // } else if (state.selection === "profile") {
-  //   html = <CustomUser />;
-  // } else if (state.selection === "postnews") {
-  //   html = <ArticleForm />;
-  // }
+
   return (
     <>
       <SecondaryHeader handleLogoutSubmit={handleLogoutSubmit} />
@@ -79,22 +85,22 @@ function App(props) {
           <ProfilePage isAuth={isAuth} />
           <Admin isAuth={isAuth} handleLogoutSubmit={handleLogoutSubmit} />
         </Route>
-        <Route path="/articles/:phase?/:category?">
+        <Route path="/articles/:phase?">
           <ArticleListAuth
             isAuth={isAuth}
             history={history}
             handleLogoutSubmit={handleLogoutSubmit}
           />
         </Route>
-        <Route path="/articles/published/:category?">
+        {/* <Route path="/">
           <ArticleList />
-        </Route>
-        <Route path="/">
+        </Route> */}
+        <Route path="/:category?">
           <ArticleList />
         </Route>
 
-        <Route path="/articles/admin">
-          <ArticleListAdmin />
+        <Route path="/admin">
+          <ArticleListAdmin isAuth={isAuth} isAdmin={isAdmin} />
         </Route>
       </Switch>
     </>

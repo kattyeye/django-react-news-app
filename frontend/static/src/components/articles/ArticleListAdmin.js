@@ -14,12 +14,18 @@ function ArticleListAdmin(props) {
   const [articleList, setArticleList] = useState([]);
 
   useEffect(() => {
+    const key = props.match.params.phase;
+    let url = `/api_v1/articles/admin/`;
+    if (key) {
+      url = `/api_v1/articles/admin/`;
+    }
     async function fetchArticles() {
-      const response = await fetch(`/api_v1/articles/admin/`);
+      const response = await fetch(url);
       const data = await response.json();
       console.log("articles", data);
-      props.setArticleList(data);
+      setArticleList(data);
     }
+    console.log({ articleList: articleList.article });
     fetchArticles();
   }, []);
 
@@ -30,7 +36,7 @@ function ArticleListAdmin(props) {
       headers: {
         "X-CSRFToken": Cookies.get("csrftoken"),
       },
-      body: props.articleList.article,
+      body: articleList.article,
     };
     const response = await fetch(
       `/api_v1/articles/${e.target.value}/`,
@@ -40,7 +46,7 @@ function ArticleListAdmin(props) {
       console.log(response);
     } else {
       const data = await response.json();
-      //   props.setArticle(data);
+      //   setArticle(data);
     }
   }
 
@@ -51,7 +57,7 @@ function ArticleListAdmin(props) {
       headers: {
         "X-CSRFToken": Cookies.get("csrftoken"),
       },
-      body: props.articleList.article,
+      body: articleList.article,
     };
     const response = await fetch(
       `/api_v1/articles/${e.target.value}/`,
@@ -61,7 +67,7 @@ function ArticleListAdmin(props) {
       console.log(response);
     } else {
       const data = await response.json();
-      //   props.setArticle(data);
+      //   setArticle(data);
     }
   }
   async function changeToArchived(e) {
@@ -71,7 +77,7 @@ function ArticleListAdmin(props) {
       headers: {
         "X-CSRFToken": Cookies.get("csrftoken"),
       },
-      body: props.articleList.article,
+      body: articleList.article,
     };
     const response = await fetch(
       `/api_v1/articles/${e.target.value}/`,
@@ -81,14 +87,14 @@ function ArticleListAdmin(props) {
       console.log(response);
     } else {
       const data = await response.json();
-      //   props.setArticle(data);
+      //   setArticle(data);
     }
   }
 
   return (
     <div className="container mt-5">
       <div className="articleholder">
-        {props.articleList.map((article) => (
+        {articleList.map((article) => (
           <div className="content" key={article.id}>
             <section className="blog-hero-section">
               <h2>{article.title}</h2>

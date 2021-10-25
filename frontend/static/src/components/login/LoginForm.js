@@ -41,7 +41,7 @@ function LoginForm(props) {
       const data = await response.json();
       Cookies.set("Authorization", `Token${data.key}`);
       props.setIsAuth(true);
-      //   props.history.push("/account");
+      props.history.push("/");
     }
   }
 

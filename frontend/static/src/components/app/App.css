@@ -13,6 +13,8 @@ img {
 }
 h2 {
   color: black;
+  font-family: "roboto" sans-serif;
+  font-size: 35px;
 }
 
 .btn {
@@ -138,3 +140,17 @@ textarea.form-control::placeholder {
 .article-title {
   margin-bottom: 30px;
 }
+
+#hero-img {
+  filter: brightness(0.7);
+}
+p.info {
+  margin-top: 30px;
+}
+
+/* @media only screen and (min-device-width: 768px) and (max-device-width: 1024px) and (-webkit-min-device-pixel-ratio: 1) {
+  div#navbarResponsive {
+    display: flex;
+    flex-direction: row;
+  }
+} */
