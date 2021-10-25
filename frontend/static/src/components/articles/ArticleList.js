@@ -17,7 +17,7 @@ const categories = {
 };
 function ArticleList(props) {
   const [articleList, setArticleList] = useState([]);
-
+  const [showArticle, setShowArticle] = useState(false);
   useEffect(() => {
     const catKey = props.match.params.category;
     // const key = props.match.params.phase;
@@ -56,8 +56,9 @@ function ArticleList(props) {
       return <span>{likes.length} Likes</span>;
     }
   }
+
   return (
-    <div className="container mt-5">
+    <div className="container mt-5 article-container">
       <div className="articleholder">
         {articleList.map((article) => (
           <div className="content " key={article.id}>
@@ -82,10 +83,17 @@ function ArticleList(props) {
               <span style={{ fontStyle: "italic" }}>
                 category: {article.category}
               </span> */}
+              {/* {showArticle &&} */}
               <p className="info">{article.body}</p>
             </section>
-            <button type="button" className="btn btn-primary">
-              Continue Reading
+            <button
+              type="button"
+              className="btn btn-primary"
+              value={article.id}
+              // onClick={() => {
+              //   setShowArticle(true);
+            >
+              Read More
             </button>
             <button onClick={addLike} type="button" className=" btn like-btn">
               {likeOrLikes()}
@@ -93,6 +101,22 @@ function ArticleList(props) {
           </div>
         ))}
       </div>
+      <aside className="aside-articles">
+        {articleList.map((article) => (
+          <div className="content " key={article.id}>
+            <section className="blog-hero-section">
+              <h4 className="article-title">{article.title}</h4>
+              {article.image && (
+                <img
+                  id="hero-img"
+                  src={article.image}
+                  alt="image-for-news-article"
+                />
+              )}
+            </section>
+          </div>
+        ))}
+      </aside>
     </div>
   );
 }

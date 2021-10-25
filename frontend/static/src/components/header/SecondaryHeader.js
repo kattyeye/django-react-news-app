@@ -15,12 +15,18 @@ export default function SecondaryHeader(props) {
                   <li className="nav-item secondary-nav-item p-3">
                     <NavLink to="/">Home</NavLink>
                   </li>
-                  <li className="nav-item secondary-nav-item p-3">
-                    <NavLink to="/admin">Admin</NavLink>
-                  </li>
-                  <li className="nav-item secondary-nav-item p-3">
-                    <NavLink to="/account">My Account</NavLink>
-                  </li>
+
+                  {props.isAuth && (
+                    <>
+                      <li className="nav-item secondary-nav-item p-3">
+                        <NavLink to="/admin">Admin</NavLink>
+                      </li>
+                      <li className="nav-item secondary-nav-item p-3">
+                        <NavLink to="/account">My Account</NavLink>
+                      </li>
+                    </>
+                  )}
+
                   <li>
                     <NavLink className="navbar-brand" to="/">
                       <img src="media/3.png" />
@@ -41,7 +47,7 @@ export default function SecondaryHeader(props) {
                       type="button"
                       onClick={() => props.handleLogoutSubmit()}
                     >
-                      Logout
+                      Logout <i class="fas fa-sign-out-alt"></i>
                     </button>
                   </li>
                 </ul>

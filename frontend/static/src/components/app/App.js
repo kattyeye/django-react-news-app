@@ -14,6 +14,7 @@ import PrimaryHeader from "../header/PrimaryHeader";
 import Cookies from "js-cookie";
 import ArticleListAdmin from "../articles/ArticleListAdmin";
 import PrivateRoute from "../privateroute/PrivateRoute";
+import Footer from "../footer/Footer";
 function App(props) {
   const [isAuth, setIsAuth] = useState(null);
   const [isAdmin, setIsAdmin] = useState(null);
@@ -70,7 +71,10 @@ function App(props) {
 
   return (
     <>
-      <SecondaryHeader handleLogoutSubmit={handleLogoutSubmit} />
+      <SecondaryHeader
+        handleLogoutSubmit={handleLogoutSubmit}
+        isAuth={isAuth}
+      />
       <PrimaryHeader />
       <Switch>
         <Route path="/registration">
@@ -103,6 +107,7 @@ function App(props) {
           <ArticleListAdmin isAuth={isAuth} isAdmin={isAdmin} />
         </Route>
       </Switch>
+      <Footer />
     </>
   );
 }
