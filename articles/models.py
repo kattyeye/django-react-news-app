@@ -32,11 +32,13 @@ class Article(models.Model):
     HOME = 'HOM'
     FOOD = 'FOO'
     FASHION = "FAS"
+    TRAVEL = "TRA"
     LOCAL = 'LOC'
     GLOBAL = 'GLO'
     CATEGORY_OPTIONS = [
         (HOME, "Home"),
         (FOOD, "Food"),
+        (TRAVEL, "Travel"),
         (FASHION, "Fashion"),
         (LOCAL, "Local"),
         (GLOBAL, "Global"),

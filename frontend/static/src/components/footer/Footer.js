@@ -21,7 +21,6 @@ export default function Footer(props) {
             }}
             href="https://github.com/kattyeye"
           >
-            {" "}
             kattyeye
           </a>
         </strong>

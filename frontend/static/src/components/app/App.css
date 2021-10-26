@@ -103,11 +103,15 @@ aside.aside-articles {
   flex-direction: column;
   width: 30%;
 }
+
 .aside-articles div {
   padding: 5% 5%;
   border: #cfe077 1px solid;
   border-radius: 5px;
   margin-bottom: 80px;
+  margin-top: 0px;
+  display: flex;
+  flex-direction: column-reverse;
 }
 .article-container {
   display: flex;
@@ -162,11 +166,11 @@ textarea.form-control::placeholder {
 }
 p.info {
   margin: 35px 0px;
-  display: -webkit-box;
+  /* display: -webkit-box;
   -webkit-line-clamp: 5;
   -webkit-box-orient: vertical;
   overflow: hidden;
-  text-overflow: ellipsis;
+  text-overflow: ellipsis; */
 }
 
 /* @media only screen and (min-device-width: 768px) and (max-device-width: 1024px) {
@@ -177,3 +181,9 @@ p.info {
     width: 100%;
   }
 } */
+@media (min-width: 992px) {
+  .navbar-expand-lg .navbar-nav {
+    display: flex;
+    align-items: center;
+  }
+}
