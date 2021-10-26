@@ -95,17 +95,17 @@ function App(props) {
             handleLogoutSubmit={handleLogoutSubmit}
           />
         </Route>
-        {/* <Route path="/">
-          <ArticleList />
-        </Route> */}
-        <Route path="/:category?">
-          <ArticleList />
-        </Route>
-
         <Route path="/admin">
           <ArticleListAdmin isAuth={isAuth} isAdmin={isAdmin} />
         </Route>
       </Switch>
+      {/* <Route path="/">
+          <ArticleList />
+        </Route> */}
+      <Route path="/:category?">
+        <ArticleList />
+      </Route>
+
       <Footer />
     </>
   );

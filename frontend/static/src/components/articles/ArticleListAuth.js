@@ -3,6 +3,7 @@ import { withRouter } from "react-router-dom";
 import { useLocation } from "react-router-dom";
 import Cookies from "js-cookie";
 import { FormFloating } from "react-bootstrap";
+import DraftArticle from "./DraftArticle";
 
 const phases = {
   drafts: "DRA",
@@ -12,69 +13,50 @@ const phases = {
 };
 
 function ArticleListAuth(props) {
-  const [articleList, setArticleList] = useState([]);
+  const [articles, setArticles] = useState([]);
+  const [isEditing, setIsEditing] = useState(null);
+
+  const location = useLocation();
 
   useEffect(() => {
     const key = props.match.params.phase;
-    // alert(key);
     let url = `/api_v1/articles/`;
     if (key) {
       url = `/api_v1/articles/?phase=${phases[key]}`;
-      // alert(url);
     }
     async function fetchArticles() {
       const response = await fetch(url);
       const data = await response.json();
-      console.log("articles", data);
-      setArticleList(data);
+      setArticles(data);
     }
     fetchArticles();
-  }, []);
+  }, [location]);
 
-  async function submitToAdmin(e) {
-    // e.preventDefault();
-    const article = articleList.find(
-      (item) => item.id === parseInt(e.target.value)
-    );
-    // let formData = new FormData();
-    // formData.append("title", article.title);
-    // formData.append("body", article.body);
-    // formData.append("image", article.image); // constructing key value pairs
-    // formData.append("phase", e.target.dataset);
-    // let file = e.target.files;
+  function handleChange(e) {
+    const { name, value } = e.target;
+    const articlesCopy = [...articles];
+    const index = articlesCopy.findIndex((article) => article.id === isEditing);
 
-    // if (article.image !== file) {
-    //   delete article.image;
-    // } else {
-    //   formData.append("image", file);
-    //   new FileReader().readAsDataURL(file);
-    //   setArticleList({ ...article, image: file });
-    // }
+    const articleCopy = { ...articles[index] };
+    articleCopy[name] = value;
+    articlesCopy[index] = articleCopy;
+    setArticles(articlesCopy);
+  }
 
-    // const options = {
-    //   method: "PUT",
-    //   headers: {
-    //     "Content-Type": "application/json",
-    //     "X-CSRFToken": Cookies.get("csrftoken"),
-    //   },
-    //   body: formData,
-    // };
-    // const response = await fetch(
-    //   `/api_v1/articles/${e.target.value}/`,
-    //   options
-    // );
-    // if (!response) {
-    //   console.log(response);
-    // } else {
-    //   const data = await response.json();
-    //   console.log({ data });
-    //   // setArticleList(data);
-    // }
+  async function handleSubmit(e) {
     e.preventDefault();
+
+    const index = articles.findIndex((article) => article.id === isEditing);
+    const article = { ...articles[index] };
+    const phase = e.target.dataset.phase;
+    if (true) {
+      delete article.image;
+    }
+
     const formData = new FormData();
     formData.append("title", article.title);
     formData.append("body", article.body);
-    formData.append("phase", e.target.dataset.phase);
+    formData.append("phase", phase);
 
     const options = {
       method: "PUT",
@@ -84,122 +66,52 @@ function ArticleListAuth(props) {
       body: formData,
     };
     const response = await fetch(
-      `/api_v1/articles/${e.target.value}/`,
+      `/api_v1/articles/${isEditing}/`,
       options
     ).catch(props.handleError);
     if (!response) {
       console.log(response);
     } else {
       const data = await response.json();
-      // props.setArticleList(data);
-    }
-    if ("DRA") {
-      props.history.push("/articles/drafts");
-    } else {
-      props.history.push("/");
+      const articlesCopy = [...articles];
+      articlesCopy[index] = data;
+      setArticles(articlesCopy);
     }
   }
 
-  const draftArticles = articleList.filter(
-    (article) => article.phase === "DRA"
-  );
-  // const publishedArticles = articleList.filter(
-  //   (article) => article.phase === "PUB"
-  // );
+  const articlesHTML = articles.map((article) => (
+    <form key={article.id}>
+      <input
+        type="text"
+        name="title"
+        value={article.title}
+        onChange={handleChange}
+      />
+      <textarea
+        type="text"
+        name="body"
+        value={article.body}
+        onChange={handleChange}
+      />
+      {article.phase === "DRA" && (
+        <button type="button" onClick={() => setIsEditing(article.id)}>
+          Edit
+        </button>
+      )}
 
-  return (
-    <div className="container-fluid mt-5">
-      <div className="articleholder">
-        {draftArticles?.map((article) => (
-          <div className="content col-8" key={article.id}>
-            <section className="blog-hero-section">
-              <input value={article.title} onChange={handleChange} />
-              <input type="file" />
-            </section>
-            <section className="text">
-              <p style={{ fontStyle: "italic" }}>
-                by {article.author} <br></br> phase: {article.phase}
-              </p>
+      {article.id === isEditing ? (
+        <>
+          <button type="click" data-phase="DRA" onClick={handleSubmit}>
+            Save as draft
+          </button>
+          <button type="click" data-phase="SUB" onClick={handleSubmit}>
+            Save and submit
+          </button>
+        </>
+      ) : null}
+    </form>
+  ));
 
-              <textarea
-                style={{ width: "80%" }}
-                value={article.body}
-                onChange={handleChange}
-              />
-              <button
-                type="button"
-                className="btn btn-success mt-3"
-                name="DRA"
-                value={article.id}
-                data-phase="SUB"
-                onClick={submitToAdmin}
-              >
-                Submit for Publishing
-              </button>
-              <button
-                type="button"
-                className="btn btn-success mt-3"
-                name="DRA"
-                value={article.id}
-                data-phase="DRA"
-                onClick={submitToAdmin}
-              >
-                Save
-              </button>
-            </section>
-          </div>
-        ))}
-      </div>
-      {/* <div className="articleholder">
-        {publishedArticles?.map((article) => (
-          <div className="content col-8" key={article.id}>
-            <section className="blog-hero-section">
-              <h2>{article.title}</h2>
-
-              <img
-                id="hero-img"
-                src={article.image}
-                alt="image-for-news-article"
-              />
-            </section>
-            <section className="text">
-              <p style={{ fontStyle: "italic" }}>
-                by {article.author} <br></br> phase: {article.phase}
-              </p>
-              <p className="info">{article.body}</p>
-
-              <button
-                type="button"
-                className="btn btn-success mt-3"
-                name="SUB"
-                value="PUB"
-                // onClick={changeToPublished}
-              >
-                Publish
-              </button>
-              <button
-                type="button"
-                className="btn btn-warning mt-3"
-                name="SUB"
-                value="REJ"
-                // onClick={changeToRejected}
-              >
-                Reject
-              </button>
-              <button
-                type="button"
-                className="btn btn-primary mt-3"
-                name="SUB"
-                value="ARC"
-                // onClick={changeToArchived}
-              >
-                Archive
-              </button>
-            </section>
-          </div>
-        ))}
-      </div> */}
-    </div>
-  );
+  return <div className="container-fluid mt-5">{articlesHTML}</div>;
 }
 export default withRouter(ArticleListAuth);

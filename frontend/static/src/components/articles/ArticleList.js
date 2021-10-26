@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { withRouter } from "react-router-dom";
+import { withRouter, useLocation } from "react-router-dom";
 import ArticleItem from "./ArticleItem";
 import { Modal, Button } from "react-bootstrap";
 const phases = {
@@ -22,6 +22,7 @@ function ArticleList(props) {
   const handleClose = () => setLgShow(false);
   const handleShow = () => setLgShow(true);
   const [lgShow, setLgShow] = useState(false);
+  const location = useLocation();
   useEffect(() => {
     const catKey = props.match.params.category;
     // const key = props.match.params.phase;
@@ -44,7 +45,7 @@ function ArticleList(props) {
       setArticleList(data);
     }
     fetchArticles();
-  }, []);
+  }, [location]);
 
   const [likes, setLikes] = useState([]);
 
