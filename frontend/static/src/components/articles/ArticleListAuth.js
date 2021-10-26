@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { withRouter } from "react-router-dom";
 import { useLocation } from "react-router-dom";
 import Cookies from "js-cookie";
+import { FormFloating } from "react-bootstrap";
 
 const phases = {
   drafts: "DRA",
@@ -31,29 +32,71 @@ function ArticleListAuth(props) {
   }, []);
 
   async function submitToAdmin(e) {
-    e.preventDefault();
+    // e.preventDefault();
     const article = articleList.find(
       (item) => item.id === parseInt(e.target.value)
     );
+    // let formData = new FormData();
+    // formData.append("title", article.title);
+    // formData.append("body", article.body);
+    // formData.append("image", article.image); // constructing key value pairs
+    // formData.append("phase", e.target.dataset);
+    // let file = e.target.files;
+
+    // if (article.image !== file) {
+    //   delete article.image;
+    // } else {
+    //   formData.append("image", file);
+    //   new FileReader().readAsDataURL(file);
+    //   setArticleList({ ...article, image: file });
+    // }
+
+    // const options = {
+    //   method: "PUT",
+    //   headers: {
+    //     "Content-Type": "application/json",
+    //     "X-CSRFToken": Cookies.get("csrftoken"),
+    //   },
+    //   body: formData,
+    // };
+    // const response = await fetch(
+    //   `/api_v1/articles/${e.target.value}/`,
+    //   options
+    // );
+    // if (!response) {
+    //   console.log(response);
+    // } else {
+    //   const data = await response.json();
+    //   console.log({ data });
+    //   // setArticleList(data);
+    // }
+    e.preventDefault();
+    const formData = new FormData();
+    formData.append("title", article.title);
+    formData.append("body", article.body);
+    formData.append("phase", e.target.dataset.phase);
+
     const options = {
       method: "PUT",
       headers: {
-        "Content-Type": "application/json",
         "X-CSRFToken": Cookies.get("csrftoken"),
       },
-      body: JSON.stringify(article),
+      body: formData,
     };
     const response = await fetch(
       `/api_v1/articles/${e.target.value}/`,
       options
-    );
+    ).catch(props.handleError);
     if (!response) {
       console.log(response);
     } else {
-      props.handleImage(article.image);
       const data = await response.json();
-      console.log({ data });
-      // setArticleList(data);
+      // props.setArticleList(data);
+    }
+    if ("DRA") {
+      props.history.push("/articles/drafts");
+    } else {
+      props.history.push("/");
     }
   }
 
@@ -65,28 +108,43 @@ function ArticleListAuth(props) {
   // );
 
   return (
-    <div className="container mt-5">
+    <div className="container-fluid mt-5">
       <div className="articleholder">
         {draftArticles?.map((article) => (
           <div className="content col-8" key={article.id}>
             <section className="blog-hero-section">
-              <input value={article.title} />
-              <input value={article.image} />
+              <input value={article.title} onChange={handleChange} />
+              <input type="file" />
             </section>
             <section className="text">
               <p style={{ fontStyle: "italic" }}>
                 by {article.author} <br></br> phase: {article.phase}
               </p>
-              <input value={article.body} />
 
+              <textarea
+                style={{ width: "80%" }}
+                value={article.body}
+                onChange={handleChange}
+              />
               <button
                 type="button"
                 className="btn btn-success mt-3"
                 name="DRA"
                 value={article.id}
+                data-phase="SUB"
                 onClick={submitToAdmin}
               >
                 Submit for Publishing
+              </button>
+              <button
+                type="button"
+                className="btn btn-success mt-3"
+                name="DRA"
+                value={article.id}
+                data-phase="DRA"
+                onClick={submitToAdmin}
+              >
+                Save
               </button>
             </section>
           </div>

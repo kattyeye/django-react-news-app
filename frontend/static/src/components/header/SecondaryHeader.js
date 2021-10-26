@@ -1,6 +1,7 @@
 import { NavLink } from "react-router-dom";
 import Navbar from "react-bootstrap/Navbar";
 import { Container, Nav } from "react-bootstrap";
+import mainLogo from "./mainLogo.png";
 export default function SecondaryHeader(props) {
   return (
     // <nav className="">
@@ -105,39 +106,42 @@ export default function SecondaryHeader(props) {
     //     </div>
     //   </div>
     // </nav>
-    <Navbar collapseOnSelect expand="lg">
+    <Navbar collapseOnSelect expand="lg" className="container-fluid">
       <Container>
         <Navbar.Toggle aria-controls="responsive-navbar-nav" />
         <Navbar.Collapse id="responsive-navbar-nav">
-          <Nav className="me-auto">
+          {/* <Nav className="me-auto">
             <Nav.Link>
               <li className="nav-item secondary-nav-item p-3">
                 <NavLink to="/">Home</NavLink>
               </li>
             </Nav.Link>
-            <Nav.Link>
+            {/* <Nav.Link>
               <li className="nav-item secondary-nav-item p-3">
                 <NavLink to="/admin">Admin</NavLink>
               </li>
-            </Nav.Link>
-          </Nav>
-          <Nav>
-            <Nav.Link>
-              {props.isAuth && (
-                <>
+            </Nav.Link> */}
+          {/* </Nav> */}
+          <Nav className="me-auto container-fluid">
+            {props.isAuth && (
+              <>
+                <Nav.Link>
                   <li className="nav-item secondary-nav-item p-3">
                     <NavLink to="/admin">Admin</NavLink>
                   </li>
+                </Nav.Link>
+                <Nav.Link>
                   <li className="nav-item secondary-nav-item p-3">
                     <NavLink to="/account">My Account</NavLink>
                   </li>
-                </>
-              )}
-            </Nav.Link>
+                </Nav.Link>
+              </>
+            )}
+
             <Navbar.Brand>
               <li>
                 <NavLink className="navbar-brand" to="/">
-                  <img src="media/3.png" />
+                  <img src={mainLogo} />
                 </NavLink>
               </li>
             </Navbar.Brand>

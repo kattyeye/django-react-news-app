@@ -62,7 +62,7 @@ function ArticleList(props) {
   }
 
   return (
-    <div className="container mt-5 article-container">
+    <div className="container-fluid mt-5 article-container">
       <div className="articleholder">
         {articleList.map((article) => (
           // <div className="content " key={article.id}>

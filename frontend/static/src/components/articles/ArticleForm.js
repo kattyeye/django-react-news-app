@@ -25,7 +25,6 @@ export default function ArticleForm(props) {
 
     const reader = new FileReader();
     reader.onloadend = () => {
-      // setArticle(reader.result);
       setPreview(reader.result);
     };
     reader.readAsDataURL(file);
@@ -59,7 +58,11 @@ export default function ArticleForm(props) {
       const data = await response.json();
       setArticle(data);
     }
-    props.history.push("/drafts");
+    if ("DRA") {
+      props.history.push("/articles/drafts");
+    } else {
+      props.history.push("/");
+    }
   }
 
   // if (!props.isAuth) {
@@ -95,7 +98,9 @@ export default function ArticleForm(props) {
         />
 
         <input onChange={handleImage} type="file" className="form-control" />
-        {article.image && <img src={preview} alt="" />}
+        {article.image && (
+          <img src={preview} alt="" className="preview-image" />
+        )}
         <button
           type="button"
           className="btn btn-save mt-3"

@@ -187,3 +187,7 @@ p.info {
     align-items: center;
   }
 }
+
+.preview-image {
+  width: 200px;
+}

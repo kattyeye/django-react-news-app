@@ -3,7 +3,7 @@ import { NavLink } from "react-router-dom";
 export default function PrimaryHeader() {
   return (
     <nav className="navbar navbar-expand-lg ">
-      <div className="container">
+      <div className="container-fluid">
         <div
           className="collapse navbar-collapse primarynav"
           id="navbarResponsive"

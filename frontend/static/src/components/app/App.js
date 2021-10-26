@@ -87,7 +87,6 @@ function App(props) {
           {/* <ProfileForm /> */}
           <ArticleForm history={history} isAuth={isAuth} />
           <ProfilePage isAuth={isAuth} />
-          <Admin isAuth={isAuth} handleLogoutSubmit={handleLogoutSubmit} />
         </Route>
         <Route path="/articles/:phase?">
           <ArticleListAuth

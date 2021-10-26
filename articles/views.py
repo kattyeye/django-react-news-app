@@ -17,10 +17,8 @@ class ArticleListAPIView(generics.ListCreateAPIView):
         if not self.request.user.is_anonymous:
             phase_text = self.request.query_params.get('phase')
             if phase_text is not None:
-                if phase_text == 'ALL':  # api_v1/articles/?phase=ALL
-                    return Article.objects.filter(author=self.request.user)
-                else:  # e.g. api_v1/articles/?phase=DFT
-                    return Article.objects.filter(phase=phase_text, author=self.request.user)
+                # e.g. api_v1/articles/?phase=DRA
+                return Article.objects.filter(phase=phase_text, author=self.request.user)
 
         category_text = self.request.query_params.get('category')
         if category_text is not None:
@@ -50,7 +48,8 @@ class ArticleListAPIView(generics.ListCreateAPIView):
 class ArticleListAdminAPIView(generics.ListCreateAPIView):
     # queryset = Article.objects.all()
     serializer_class = ArticleSerializer
-    # permission_classes = (IsAdminUser)  # tuple
+    permission_classes = (
+        IsAdminUser, IsAuthenticatedOrReadOnly, IsOwnerOrReadOnly,)  # tuple
     queryset = Article.objects.all()
 
     def perform_create(self, serializer):
@@ -59,7 +58,7 @@ class ArticleListAdminAPIView(generics.ListCreateAPIView):
 
 class ArticleAdminDetailAPIView(generics.RetrieveUpdateDestroyAPIView):
     serializer_class = ArticleSerializer
-    # permission_classes = (IsAdminUser)
+    permission_classes = (IsAdminUser, IsOwnerOrReadOnly,)
     queryset = Article.objects.all()
 
     def perform_create(self, serializer):
