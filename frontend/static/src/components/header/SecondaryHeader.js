@@ -20,14 +20,17 @@ export default function SecondaryHeader(props) {
               </li>
             </Nav.Link> */}
           {/* </Nav> */}
+
           <Nav className="me-auto container-fluid">
+            {props.isAdmin == true && (
+              <Nav.Link>
+                <li className="nav-item secondary-nav-item p-3">
+                  <NavLink to="/admin">Admin</NavLink>
+                </li>
+              </Nav.Link>
+            )}
             {props.isAuth && (
               <>
-                <Nav.Link>
-                  <li className="nav-item secondary-nav-item p-3">
-                    <NavLink to="/admin">Admin</NavLink>
-                  </li>
-                </Nav.Link>
                 <Nav.Link>
                   <li className="nav-item secondary-nav-item p-3">
                     <NavLink to="/account">My Account</NavLink>

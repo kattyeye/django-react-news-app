@@ -53,7 +53,7 @@ function ArticleList(props) {
   return (
     <div className="container-fluid mt-5 article-container ">
       <div className="articleholder">
-        {articleList.map((article) => (
+        {articleList?.map((article) => (
           <ArticleItem article={article} />
         ))}
       </div>
@@ -75,7 +75,7 @@ function ArticleList(props) {
                     />
                   )}
                 </section>
-              </div>{" "}
+              </div>
             </>
           ))}
           {/* <section className="aside-title-holder">

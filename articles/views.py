@@ -10,7 +10,7 @@ from rest_framework.permissions import IsAuthenticatedOrReadOnly, IsAdminUser
 class ArticleListAPIView(generics.ListCreateAPIView):
 
     serializer_class = ArticleSerializer
-    permission_classes = (IsAuthenticatedOrReadOnly,)  # tuple
+    permission_classes = (IsOwnerOrReadOnly,)  # tuple
 
     def get_queryset(self):
         # logic for an authenticated user
@@ -19,7 +19,8 @@ class ArticleListAPIView(generics.ListCreateAPIView):
             if phase_text is not None:
                 # e.g. api_v1/articles/?phase=DRA
                 return Article.objects.filter(phase=phase_text, author=self.request.user)
-
+            # if self.request.user.is_staff:
+            #     return Article.objects.all()
         category_text = self.request.query_params.get('category')
         if category_text is not None:
             return Article.objects.filter(phase='PUB', category=category_text)
@@ -49,7 +50,7 @@ class ArticleListAdminAPIView(generics.ListCreateAPIView):
     # queryset = Article.objects.all()
     serializer_class = ArticleSerializer
     permission_classes = (
-        IsAdminUser, IsAuthenticatedOrReadOnly, IsOwnerOrReadOnly,)  # tuple
+        IsAdminUser,)
     queryset = Article.objects.all()
 
     def perform_create(self, serializer):
@@ -58,7 +59,7 @@ class ArticleListAdminAPIView(generics.ListCreateAPIView):
 
 class ArticleAdminDetailAPIView(generics.RetrieveUpdateDestroyAPIView):
     serializer_class = ArticleSerializer
-    permission_classes = (IsAdminUser, IsOwnerOrReadOnly,)
+    permission_classes = (IsAdminUser,)
     queryset = Article.objects.all()
 
     def perform_create(self, serializer):
@@ -68,13 +69,7 @@ class ArticleAdminDetailAPIView(generics.RetrieveUpdateDestroyAPIView):
 class ArticleDetailAPIView(generics.RetrieveUpdateDestroyAPIView):
     # queryset = Article.objects.all()
     serializer_class = ArticleSerializer
-    permission_classes = (IsOwnerOrReadOnly,)  # tuple
-    # queryset = Article.objects.all()
-    # print(self.request.query_params)
-    # phase = self.request.query_params.get('phase')
-    # if phase is not None:
-    #     queryset = queryset.filter(publishing_phase=phase)
-    # return queryset
+    permission_classes = (IsOwnerOrReadOnly, IsAdminUser,)
 
     def get_queryset(self):
         # import pdb

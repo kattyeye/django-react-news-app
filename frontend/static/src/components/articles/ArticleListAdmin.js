@@ -11,137 +11,137 @@ const phases = {
 };
 
 function ArticleListAdmin(props) {
-  const [articleList, setArticleList] = useState([]);
+  const [articles, setArticles] = useState([]);
+  const [isEditing, setIsEditing] = useState(null);
+
+  const location = useLocation();
 
   useEffect(() => {
     const key = props.match.params.phase;
     let url = `/api_v1/articles/admin/`;
     if (key) {
-      url = `/api_v1/articles/admin/`;
+      url = `/api_v1/articles/?phase=${phases[key]}`;
     }
     async function fetchArticles() {
       const response = await fetch(url);
       const data = await response.json();
-      console.log("articles", data);
-      setArticleList(data);
+      setArticles(data);
     }
-    console.log({ articleList: articleList.article });
     fetchArticles();
-  }, []);
+  }, [location]);
 
-  async function changeToPublished(e) {
-    e.preventDefault();
-    const options = {
-      method: "PUT",
-      headers: {
-        "X-CSRFToken": Cookies.get("csrftoken"),
-      },
-      body: articleList.article,
-    };
-    const response = await fetch(
-      `/api_v1/articles/${e.target.value}/`,
-      options
-    );
-    if (!response) {
-      console.log(response);
-    } else {
-      const data = await response.json();
-      //   setArticle(data);
-    }
+  function handleChange(e) {
+    const { name, value } = e.target;
+    const articlesCopy = [...articles];
+    const index = articlesCopy.findIndex((article) => article.id === isEditing);
+
+    const articleCopy = { ...articles[index] };
+    articleCopy[name] = value;
+    articlesCopy[index] = articleCopy;
+    setArticles(articlesCopy);
   }
 
-  async function changeToRejected(e) {
+  async function handleSubmit(e) {
     e.preventDefault();
+
+    const index = articles.findIndex((article) => article.id === isEditing);
+    const article = { ...articles[index] };
+    const phase = e.target.dataset.phase;
+    if (true) {
+      delete article.image;
+    }
+
+    const formData = new FormData();
+    formData.append("title", article.title);
+    formData.append("body", article.body);
+    formData.append("phase", phase);
+
     const options = {
       method: "PUT",
       headers: {
         "X-CSRFToken": Cookies.get("csrftoken"),
       },
-      body: articleList.article,
+      body: formData,
     };
     const response = await fetch(
-      `/api_v1/articles/${e.target.value}/`,
+      `/api_v1/articles/admin/${isEditing}/`,
       options
-    );
+    ).catch(props.handleError);
     if (!response) {
       console.log(response);
     } else {
       const data = await response.json();
-      //   setArticle(data);
+      const articlesCopy = [...articles];
+      articlesCopy[index] = data;
+      setArticles(articlesCopy);
     }
   }
-  async function changeToArchived(e) {
-    e.preventDefault();
-    const options = {
-      method: "PUT",
-      headers: {
-        "X-CSRFToken": Cookies.get("csrftoken"),
-      },
-      body: articleList.article,
-    };
-    const response = await fetch(
-      `/api_v1/articles/${e.target.value}/`,
-      options
-    );
-    if (!response) {
-      console.log(response);
-    } else {
-      const data = await response.json();
-      //   setArticle(data);
-    }
-  }
+
+  const articlesHTML = articles.map((article) => (
+    <form key={article.id}>
+      <input
+        type="text"
+        name="title"
+        value={article.title}
+        onChange={handleChange}
+      />
+      {article.phase == "SUB" && <span></span>}
+      <br></br>
+      <span>Phase: {article.phase}</span>
+      <section className="text">
+        <textarea
+          type="text"
+          name="body"
+          value={article.body}
+          onChange={handleChange}
+        />
+      </section>
+
+      <button
+        className="btn btn-warning"
+        type="button"
+        onClick={() => setIsEditing(article.id)}
+      >
+        Edit
+      </button>
+
+      {article.id === isEditing ? (
+        <>
+          <button
+            type="click"
+            className="btn btn-pub "
+            name="SUB"
+            data-phase="PUB"
+            onClick={handleSubmit}
+          >
+            Publish
+          </button>
+          <button
+            type="click"
+            className="btn btn-danger "
+            name="SUB"
+            data-phase="REJ"
+            onClick={handleSubmit}
+          >
+            Reject
+          </button>
+          <button
+            type="click"
+            className="btn btn-save "
+            name="SUB"
+            data-phase="ARC"
+            onClick={handleSubmit}
+          >
+            Archive
+          </button>
+        </>
+      ) : null}
+    </form>
+  ));
 
   return (
-    <div className="container mt-5">
-      <div className="articleholder">
-        {articleList.map((article) => (
-          <div className="content" key={article.id}>
-            <section className="blog-hero-section">
-              <h2>{article.title}</h2>
-
-              <img
-                id="hero-img"
-                src={article.image}
-                alt="image-for-news-article"
-              />
-            </section>
-            <section className="text">
-              <p style={{ fontStyle: "italic" }}>
-                by {article.author} <br></br> phase: {article.phase}
-              </p>
-              <p className="info">{article.body}</p>
-
-              <button
-                type="button"
-                className="btn btn-success mt-3"
-                name="SUB"
-                value="PUB"
-                onClick={changeToPublished}
-              >
-                Publish
-              </button>
-              <button
-                type="button"
-                className="btn btn-warning mt-3"
-                name="SUB"
-                value="REJ"
-                onClick={changeToRejected}
-              >
-                Reject
-              </button>
-              <button
-                type="button"
-                className="btn btn-primary mt-3"
-                name="SUB"
-                value="ARC"
-                onClick={changeToArchived}
-              >
-                Archive
-              </button>
-            </section>
-          </div>
-        ))}
-      </div>
+    <div className="container-fluid mt-5 article-auth-container">
+      <div className="articleholder">{articlesHTML}</div>
     </div>
   );
 }

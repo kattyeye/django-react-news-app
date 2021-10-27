@@ -40,7 +40,10 @@ function LoginForm(props) {
     } else {
       const data = await response.json();
       Cookies.set("Authorization", `Token${data.key}`);
-      props.setIsAuth(true);
+      props.setUser((prevState) => ({
+        ...prevState,
+        isAuth: true,
+      }));
       props.history.push("/");
     }
   }

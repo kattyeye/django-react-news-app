@@ -16,36 +16,35 @@ import ArticleListAdmin from "../articles/ArticleListAdmin";
 import PrivateRoute from "../privateroute/PrivateRoute";
 import Footer from "../footer/Footer";
 function App(props) {
-  const [isAuth, setIsAuth] = useState(null);
-  const [isAdmin, setIsAdmin] = useState(null);
+  // const [isAuth, setIsAuth] = useState(null);
+  // const [isAdmin, setIsAdmin] = useState(null);
+  const [user, setUser] = useState(null);
   const history = useHistory();
   useEffect(() => {
     const checkAuth = async () => {
       const response = await fetch("/rest-auth/user");
       if (!response.ok) {
-        setIsAuth(false);
-        // history.push("/login");
+        setUser({ isAuth: false });
       } else {
-        setIsAuth(true);
-        // history.push("/account");
+        const data = await response.json();
+        setUser({ isAuth: true, isAdmin: data.is_staff });
       }
     };
     checkAuth();
   }, [history]);
 
-  useEffect(() => {
-    const checkAdminStatus = async () => {
-      const response = await fetch("/rest-auth/user");
-      if (!response.ok) {
-        setIsAdmin(false);
-        // history.push("/login");
-      } else if (response == "admin") {
-        setIsAdmin(true);
-        // history.push("/account");
-      }
-    };
-    checkAdminStatus();
-  }, [history]);
+  // useEffect(() => {
+  //   const checkAdminStatus = async () => {
+  //     const response = await fetch("/rest-auth/user");
+  //     if (!response.ok) {
+  //       setIsAdmin(false);
+  //     } else if (response.is_staff == true) {
+  //       setIsAdmin(true);
+  //     } else {
+  //     }
+  //   };
+  //   checkAdminStatus();
+  // }, [history]);
 
   async function handleLogoutSubmit(event) {
     // event.preventDefault();
@@ -64,16 +63,20 @@ function App(props) {
       console.log(response);
       const data = await response.json();
       Cookies.remove("Authorization");
-      setIsAuth(false);
+      setUser({ isAuth: false });
       history.push("/login");
     }
   }
+
+  const isAuth = user?.isAuth;
+  const isAdmin = user?.isAdmin;
 
   return (
     <>
       <SecondaryHeader
         handleLogoutSubmit={handleLogoutSubmit}
         isAuth={isAuth}
+        isAdmin={isAdmin}
       />
       <PrimaryHeader />
       <Switch>
@@ -81,7 +84,7 @@ function App(props) {
           <RegistrationForm />
         </Route>
         <Route path="/login">
-          <LoginForm isAuth={isAuth} setIsAuth={setIsAuth} />
+          <LoginForm isAuth={isAuth} setUser={setUser} />
         </Route>
         <Route path="/account">
           {/* <ProfileForm /> */}

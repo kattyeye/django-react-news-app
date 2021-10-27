@@ -2,8 +2,6 @@ import { useState, useEffect } from "react";
 import { withRouter } from "react-router-dom";
 import { useLocation } from "react-router-dom";
 import Cookies from "js-cookie";
-import { FormFloating } from "react-bootstrap";
-import DraftArticle from "./DraftArticle";
 
 const phases = {
   drafts: "DRA",
