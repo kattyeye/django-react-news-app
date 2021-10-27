@@ -70,8 +70,8 @@ export default function ArticleForm(props) {
   // }
 
   return (
-    <div className="container">
-      <form className="mt-5 col-8 container">
+    <div className="container-fluid">
+      <form className="mt-5 container-fluid" style={{ width: "70%" }}>
         <label className="article-form-label">Submit an Article</label>
         <p className="hear">we want to hear about it.</p>
         <input

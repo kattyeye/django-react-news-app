@@ -87,24 +87,40 @@ function ArticleListAuth(props) {
         value={article.title}
         onChange={handleChange}
       />
-      <textarea
-        type="text"
-        name="body"
-        value={article.body}
-        onChange={handleChange}
-      />
+      <section className="text">
+        <textarea
+          type="text"
+          name="body"
+          value={article.body}
+          onChange={handleChange}
+        />
+      </section>
       {article.phase === "DRA" && (
-        <button type="button" onClick={() => setIsEditing(article.id)}>
+        <button
+          className="btn btn-warning"
+          type="button"
+          onClick={() => setIsEditing(article.id)}
+        >
           Edit
         </button>
       )}
 
       {article.id === isEditing ? (
         <>
-          <button type="click" data-phase="DRA" onClick={handleSubmit}>
+          <button
+            className="btn btn-save save-btn"
+            type="click"
+            data-phase="DRA"
+            onClick={handleSubmit}
+          >
             Save as draft
           </button>
-          <button type="click" data-phase="SUB" onClick={handleSubmit}>
+          <button
+            className="btn btn-pub "
+            type="click"
+            data-phase="SUB"
+            onClick={handleSubmit}
+          >
             Save and submit
           </button>
         </>
@@ -112,6 +128,10 @@ function ArticleListAuth(props) {
     </form>
   ));
 
-  return <div className="container-fluid mt-5">{articlesHTML}</div>;
+  return (
+    <div className="container-fluid mt-5 article-auth-container">
+      <div className="articleholder">{articlesHTML}</div>
+    </div>
+  );
 }
 export default withRouter(ArticleListAuth);

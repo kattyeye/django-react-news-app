@@ -2,6 +2,9 @@ import { useState, useEffect } from "react";
 import { withRouter, useLocation } from "react-router-dom";
 import ArticleItem from "./ArticleItem";
 import { Modal, Button } from "react-bootstrap";
+import gvl from "../images/gvl.jpg";
+import love from "../images/love.jpg";
+import shoes from "../images/shoes.jpg";
 const phases = {
   drafts: "DRA",
   submitted: "SUB",
@@ -66,51 +69,12 @@ function ArticleList(props) {
     <div className="container-fluid mt-5 article-container">
       <div className="articleholder">
         {articleList.map((article) => (
-          // <div className="content " key={article.id}>
-          //   <section className="blog-hero-section">
-          //     <h2 className="article-title">{article.title}</h2>
-          //     {article.image && (
-          //       <img
-          //         id="hero-img"
-          //         src={article.image}
-          //         alt="image-for-news-article"
-          //       />
-          //     )}
-          //   </section>
-          //   <section className="text">
-          //     <span
-          //       style={{ fontStyle: "italic" }}
-          //       className="author-name-text"
-          //     >
-          //       submitted by <strong>@{article.author}</strong>
-          //     </span>
-          //     {/* <br></br>
-          //     <span style={{ fontStyle: "italic" }}>
-          //       category: {article.category}
-          //     </span> */}
-          //     {/* {showArticle &&} */}
-          //     <p className="info">{article.body}</p>
-          //   </section>
-          //   {/* <button
-          //     type="button"
-          //     className="btn btn-primary"
-          //     data-toggle="modal"
-          //     data-target="#exampleModalLong"
-          //   >
-          //     Read More
-          //   </button> */}
-
-          //   <button onClick={addLike} type="button" className=" btn like-btn">
-          //     {likeOrLikes()}
-          //   </button>
-          // </div>
-
           <ArticleItem article={article} />
         ))}
       </div>
 
       <aside className="aside-articles">
-        {articleList.map((article) => (
+        {/* {articleList.map((article) => (
           <div className="content " key={article.id}>
             <section className="blog-hero-section">
               <h4 className="article-title">{article.title}</h4>
@@ -123,7 +87,33 @@ function ArticleList(props) {
               )}
             </section>
           </div>
-        ))}
+        ))} */}
+        <section className="aside-title-holder">
+          <h3 className="aside-title">Highlighted Articles</h3>
+        </section>
+        <div className="content">
+          <section className="blog-hero-section">
+            <h4 className="article-title">Jeans & High Tops: Best Practices</h4>
+
+            <img id="hero-img" src={shoes} alt="image-for-news-article" />
+          </section>
+        </div>
+        <div className="content ">
+          <section className="blog-hero-section">
+            <h4 className="article-title">Latest Local News</h4>
+
+            <img id="hero-img" src={gvl} alt="image-for-news-article" />
+          </section>
+        </div>
+        <div className="content ">
+          <section className="blog-hero-section">
+            <h4 className="article-title">
+              Words to Share: 86 Hate Movement Spreads Globally
+            </h4>
+
+            <img id="hero-img" src={love} alt="image-for-news-article" />
+          </section>
+        </div>
       </aside>
     </div>
   );
