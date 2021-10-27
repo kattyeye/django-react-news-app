@@ -2,7 +2,8 @@ import { useState, useEffect } from "react";
 import { withRouter } from "react-router-dom";
 import { useLocation } from "react-router-dom";
 import Cookies from "js-cookie";
-
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faFlag } from "@fortawesome/free-solid-svg-icons";
 const phases = {
   drafts: "DRA",
   submitted: "SUB",
@@ -20,7 +21,7 @@ function ArticleListAdmin(props) {
     const key = props.match.params.phase;
     let url = `/api_v1/articles/admin/`;
     if (key) {
-      url = `/api_v1/articles/?phase=${phases[key]}`;
+      url = `/api_v1/articles/admin/?phase=${phases[key]}`;
     }
     async function fetchArticles() {
       const response = await fetch(url);
@@ -85,9 +86,15 @@ function ArticleListAdmin(props) {
         value={article.title}
         onChange={handleChange}
       />
-      {article.phase == "SUB" && <span></span>}
+      {article.phase == "SUB" && (
+        <span style={{ color: "#bf74df" }}>
+          <FontAwesomeIcon icon={faFlag} /> Flagged for Review
+        </span>
+      )}
       <br></br>
-      <span>Phase: {article.phase}</span>
+      <span>Status: {article.phase}</span>
+      <br></br>
+      <span>Author: @{article.author}</span>
       <section className="text">
         <textarea
           type="text"
@@ -96,44 +103,51 @@ function ArticleListAdmin(props) {
           onChange={handleChange}
         />
       </section>
-
-      <button
-        className="btn btn-warning"
-        type="button"
-        onClick={() => setIsEditing(article.id)}
-      >
-        Edit
-      </button>
+      {article.phase !== "DRA" && (
+        <button
+          className="btn btn-warning"
+          type="button"
+          onClick={() => setIsEditing(article.id)}
+        >
+          Update Status
+        </button>
+      )}
 
       {article.id === isEditing ? (
         <>
-          <button
-            type="click"
-            className="btn btn-pub "
-            name="SUB"
-            data-phase="PUB"
-            onClick={handleSubmit}
-          >
-            Publish
-          </button>
-          <button
-            type="click"
-            className="btn btn-danger "
-            name="SUB"
-            data-phase="REJ"
-            onClick={handleSubmit}
-          >
-            Reject
-          </button>
-          <button
-            type="click"
-            className="btn btn-save "
-            name="SUB"
-            data-phase="ARC"
-            onClick={handleSubmit}
-          >
-            Archive
-          </button>
+          {article.phase == "SUB" && (
+            <>
+              <button
+                type="click"
+                className="btn btn-pub "
+                name="SUB"
+                data-phase="PUB"
+                onClick={handleSubmit}
+              >
+                Publish
+              </button>
+              <button
+                type="click"
+                className="btn btn-danger "
+                name="SUB"
+                data-phase="REJ"
+                onClick={handleSubmit}
+              >
+                Reject
+              </button>{" "}
+            </>
+          )}
+          {article.phase == "PUB" && (
+            <button
+              type="click"
+              className="btn btn-save "
+              name="SUB"
+              data-phase="ARC"
+              onClick={handleSubmit}
+            >
+              Archive
+            </button>
+          )}
         </>
       ) : null}
     </form>

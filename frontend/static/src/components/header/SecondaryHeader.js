@@ -21,32 +21,51 @@ export default function SecondaryHeader(props) {
             </Nav.Link> */}
           {/* </Nav> */}
 
-          <Nav className="me-auto container-fluid">
-            {props.isAdmin == true && (
-              <Nav.Link>
-                <li className="nav-item secondary-nav-item p-3">
-                  <NavLink to="/admin">Admin</NavLink>
-                </li>
-              </Nav.Link>
+          <Nav
+            className="me-auto container-fluid"
+            style={{ paddingRight: "0px" }}
+          >
+            {props.isAdmin && (
+              <NavDropdown
+                title="Admin Articles"
+                className=" secondary-nav-item p-3"
+                id="dropdown-nav-title"
+              >
+                <NavDropdown.Item>
+                  <Nav.Link>
+                    <li className="nav-item secondary-nav-item p-3">
+                      <NavLink to="/articles/admin/submitted">
+                        Submitted
+                      </NavLink>
+                    </li>
+                  </Nav.Link>
+                </NavDropdown.Item>
+                <NavDropdown.Item>
+                  <Nav.Link>
+                    <li className="nav-item secondary-nav-item p-3">
+                      <NavLink to="/articles/admin/published">
+                        Published
+                      </NavLink>
+                    </li>
+                  </Nav.Link>
+                </NavDropdown.Item>
+                <NavDropdown.Item>
+                  <Nav.Link>
+                    <li className="nav-item secondary-nav-item p-3">
+                      <NavLink to="/articles/admin/rejected">Rejected</NavLink>
+                    </li>
+                  </Nav.Link>
+                </NavDropdown.Item>
+                <NavDropdown.Item>
+                  <Nav.Link>
+                    <li className="nav-item secondary-nav-item p-3">
+                      <NavLink to="/articles/admin/archived">Archived</NavLink>
+                    </li>
+                  </Nav.Link>
+                </NavDropdown.Item>
+              </NavDropdown>
             )}
-            {props.isAuth && (
-              <>
-                <Nav.Link>
-                  <li className="nav-item secondary-nav-item p-3">
-                    <NavLink to="/account">My Account</NavLink>
-                  </li>
-                </Nav.Link>
-              </>
-            )}
-
-            <Navbar.Brand>
-              <li>
-                <NavLink className="navbar-brand" to="/">
-                  <img src={mainLogo} />
-                </NavLink>
-              </li>
-            </Navbar.Brand>
-            {props.isAuth && (
+            {props.isAuth && !props.isAdmin && (
               <NavDropdown
                 title="My Articles"
                 className=" secondary-nav-item p-3"
@@ -90,10 +109,29 @@ export default function SecondaryHeader(props) {
               </NavDropdown>
             )}
 
+            <Navbar.Brand>
+              <li>
+                <NavLink className="navbar-brand" to="/">
+                  <img src={mainLogo} />
+                </NavLink>
+              </li>
+            </Navbar.Brand>
+            {props.isAuth && (
+              <>
+                <Nav.Link>
+                  <li className="nav-item secondary-nav-item p-3">
+                    <NavLink to="/account">Compose</NavLink>
+                  </li>
+                </Nav.Link>
+              </>
+            )}
+
             {!props.isAuth && (
               <Nav.Link>
-                <li className="nav-item secondary-nav-item p-3">
-                  <NavLink to="/login">Login</NavLink>
+                <li className="nav-item secondary-nav-item p-3 ">
+                  <NavLink className="login-btn" to="/login">
+                    Login
+                  </NavLink>
                 </li>
               </Nav.Link>
             )}

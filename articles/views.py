@@ -47,11 +47,17 @@ class ArticleListAPIView(generics.ListCreateAPIView):
 
 
 class ArticleListAdminAPIView(generics.ListCreateAPIView):
-    # queryset = Article.objects.all()
+    queryset = Article.objects.all()
     serializer_class = ArticleSerializer
     permission_classes = (
         IsAdminUser,)
-    queryset = Article.objects.all()
+
+    def get_queryset(self):
+        phase_text = self.request.query_params.get('phase')
+        if phase_text is None:
+            return Article.objects.exclude(phase='DRA')
+        else:
+            return Article.objects.filter(phase=phase_text)
 
     def perform_create(self, serializer):
         serializer.save(author=self.request.user)
@@ -69,7 +75,7 @@ class ArticleAdminDetailAPIView(generics.RetrieveUpdateDestroyAPIView):
 class ArticleDetailAPIView(generics.RetrieveUpdateDestroyAPIView):
     # queryset = Article.objects.all()
     serializer_class = ArticleSerializer
-    permission_classes = (IsOwnerOrReadOnly, IsAdminUser,)
+    permission_classes = (IsOwnerOrReadOnly,)
 
     def get_queryset(self):
         # import pdb

@@ -1,5 +1,11 @@
 import "./App.css";
-import { Route, Switch, withRouter, useHistory } from "react-router-dom";
+import {
+  Route,
+  Switch,
+  withRouter,
+  useHistory,
+  Redirect,
+} from "react-router-dom";
 import ProfileForm from "../profile-form/ProfileForm";
 import ArticleList from "../articles/ArticleList";
 import ArticleForm from "../articles/ArticleForm";
@@ -15,6 +21,7 @@ import Cookies from "js-cookie";
 import ArticleListAdmin from "../articles/ArticleListAdmin";
 import PrivateRoute from "../privateroute/PrivateRoute";
 import Footer from "../footer/Footer";
+import ArticleItem from "../articles/ArticleItem";
 function App(props) {
   // const [isAuth, setIsAuth] = useState(null);
   // const [isAdmin, setIsAdmin] = useState(null);
@@ -64,7 +71,7 @@ function App(props) {
       const data = await response.json();
       Cookies.remove("Authorization");
       setUser({ isAuth: false });
-      history.push("/login");
+      history.push("/");
     }
   }
 
@@ -91,6 +98,13 @@ function App(props) {
           <ArticleForm history={history} isAuth={isAuth} />
           <ProfilePage isAuth={isAuth} />
         </Route>
+        <Route path="/articles/admin/:phase?">
+          <ArticleListAdmin
+            isAuth={isAuth}
+            isAdmin={isAdmin}
+            history={history}
+          />
+        </Route>
         <Route path="/articles/:phase?">
           <ArticleListAuth
             isAuth={isAuth}
@@ -98,16 +112,11 @@ function App(props) {
             handleLogoutSubmit={handleLogoutSubmit}
           />
         </Route>
-        <Route path="/admin">
-          <ArticleListAdmin isAuth={isAuth} isAdmin={isAdmin} />
+
+        <Route path="/:category?">
+          <ArticleList />
         </Route>
       </Switch>
-      {/* <Route path="/">
-          <ArticleList />
-        </Route> */}
-      <Route path="/:category?">
-        <ArticleList />
-      </Route>
 
       <Footer />
     </>
