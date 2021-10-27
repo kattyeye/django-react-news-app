@@ -50,71 +50,64 @@ function ArticleList(props) {
     fetchArticles();
   }, [location]);
 
-  const [likes, setLikes] = useState([]);
-
-  function addLike() {
-    const numLikes = likes.length + 1;
-    setLikes([...likes, numLikes]);
-  }
-
-  function likeOrLikes() {
-    if (likes.length === 1) {
-      return likes.length + " Like";
-    } else {
-      return <span>{likes.length} Likes</span>;
-    }
-  }
-
   return (
-    <div className="container-fluid mt-5 article-container">
+    <div className="container-fluid mt-5 article-container ">
       <div className="articleholder">
         {articleList.map((article) => (
           <ArticleItem article={article} />
         ))}
       </div>
-
-      <aside className="aside-articles">
-        {/* {articleList.map((article) => (
-          <div className="content " key={article.id}>
+      {!props.isAuth && (
+        <aside className="aside-articles container-fluid ">
+          {articleList.map((article) => (
+            <>
+              {/* <section className="aside-title-holder">
+                <h3 className="aside-title">Highlighted Article</h3>
+              </section> */}
+              <div className="content " key={article.id}>
+                <section className="blog-hero-section">
+                  <h4 className="article-title">{article.title}</h4>
+                  {article.image && (
+                    <img
+                      id="hero-img"
+                      src={article.image}
+                      alt="image-for-news-article"
+                    />
+                  )}
+                </section>
+              </div>{" "}
+            </>
+          ))}
+          {/* <section className="aside-title-holder">
+            <h3 className="aside-title">Highlighted Articles</h3>
+          </section>
+          <div className="content">
             <section className="blog-hero-section">
-              <h4 className="article-title">{article.title}</h4>
-              {article.image && (
-                <img
-                  id="hero-img"
-                  src={article.image}
-                  alt="image-for-news-article"
-                />
-              )}
+              <h4 className="article-title">
+                Jeans & High Tops: Best Practices
+              </h4>
+
+              <img id="hero-img" src={shoes} alt="image-for-news-article" />
             </section>
           </div>
-        ))} */}
-        <section className="aside-title-holder">
-          <h3 className="aside-title">Highlighted Articles</h3>
-        </section>
-        <div className="content">
-          <section className="blog-hero-section">
-            <h4 className="article-title">Jeans & High Tops: Best Practices</h4>
+          <div className="content ">
+            <section className="blog-hero-section">
+              <h4 className="article-title">Latest Local News</h4>
 
-            <img id="hero-img" src={shoes} alt="image-for-news-article" />
-          </section>
-        </div>
-        <div className="content ">
-          <section className="blog-hero-section">
-            <h4 className="article-title">Latest Local News</h4>
+              <img id="hero-img" src={gvl} alt="image-for-news-article" />
+            </section>
+          </div>
+          <div className="content ">
+            <section className="blog-hero-section">
+              <h4 className="article-title">
+                Words to Share: 86 Hate Movement Spreads Globally
+              </h4>
 
-            <img id="hero-img" src={gvl} alt="image-for-news-article" />
-          </section>
-        </div>
-        <div className="content ">
-          <section className="blog-hero-section">
-            <h4 className="article-title">
-              Words to Share: 86 Hate Movement Spreads Globally
-            </h4>
-
-            <img id="hero-img" src={love} alt="image-for-news-article" />
-          </section>
-        </div>
-      </aside>
+              <img id="hero-img" src={love} alt="image-for-news-article" />
+            </section> */}
+          {/* </div> */}
+        </aside>
+      )}
     </div>
   );
 }
