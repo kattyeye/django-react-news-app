@@ -8,19 +8,6 @@ export default function SecondaryHeader(props) {
       <Container>
         <Navbar.Toggle aria-controls="responsive-navbar-nav" />
         <Navbar.Collapse id="responsive-navbar-nav">
-          {/* <Nav className="me-auto">
-            <Nav.Link>
-              <li className="nav-item secondary-nav-item p-3">
-                <NavLink to="/">Home</NavLink>
-              </li>
-            </Nav.Link>
-            {/* <Nav.Link>
-              <li className="nav-item secondary-nav-item p-3">
-                <NavLink to="/admin">Admin</NavLink>
-              </li>
-            </Nav.Link> */}
-          {/* </Nav> */}
-
           <Nav
             className="me-auto container-fluid"
             style={{ paddingRight: "0px" }}
